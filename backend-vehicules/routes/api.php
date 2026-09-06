@@ -10,6 +10,31 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\CategoryController;
 
+Route::get('health', function () {
+    $dbStatus = 'disconnected';
+    $dbError = null;
+    try {
+        \Illuminate\Support\Facades\DB::connection()->getPdo();
+        $dbStatus = 'connected';
+    } catch (\Throwable $e) {
+        $dbError = $e->getMessage();
+    }
+
+    return response()->json([
+        'status' => 'ok',
+        'php_version' => PHP_VERSION,
+        'app_key_set' => !empty(config('app.key')),
+        'database' => [
+            'status' => $dbStatus,
+            'driver' => config('database.default'),
+            'host' => config('database.connections.mysql.host'),
+            'port' => config('database.connections.mysql.port'),
+            'database' => config('database.connections.mysql.database'),
+            'error' => $dbError,
+        ]
+    ]);
+});
+
 /*
 |--------------------------------------------------------------------------
 | 1. AUTHENTIFICATION
