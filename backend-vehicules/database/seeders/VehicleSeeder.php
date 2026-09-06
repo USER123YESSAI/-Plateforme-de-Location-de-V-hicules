@@ -11,10 +11,10 @@ class VehicleSeeder extends Seeder
     public function run(): void
     {
         // 1. Création des Catégories
-        $eco = Category::create(['name' => 'Économique', 'description' => 'Petites voitures de ville à faible consommation.']);
-        $compact = Category::create(['name' => 'Compact', 'description' => 'Voitures moyennes idéales pour les trajets quotidiens.']);
-        $suv = Category::create(['name' => 'SUV', 'description' => 'Véhicules spacieux pour la famille et les longs trajets.']);
-        $luxe = Category::create(['name' => 'Luxe', 'description' => 'Véhicules de prestige et grand confort.']);
+        $eco = Category::firstOrCreate(['name' => 'Économique'], ['description' => 'Petites voitures de ville à faible consommation.']);
+        $compact = Category::firstOrCreate(['name' => 'Compact'], ['description' => 'Voitures moyennes idéales pour les trajets quotidiens.']);
+        $suv = Category::firstOrCreate(['name' => 'SUV'], ['description' => 'Véhicules spacieux pour la famille et les longs trajets.']);
+        $luxe = Category::firstOrCreate(['name' => 'Luxe'], ['description' => 'Véhicules de prestige et grand confort.']);
 
         // 2. Création de 10 Véhicules Variés
         $vehicles = [
@@ -51,11 +51,14 @@ class VehicleSeeder extends Seeder
         ];
 
         foreach ($vehicles as $index => $vehicle) {
-            Vehicle::create(array_merge($vehicle, [
-                'status' => 'available',
-                'mileage' => rand(5000, 50000),
-                'image' => $images[$index % count($images)],
-            ]));
+            Vehicle::firstOrCreate(
+                ['license_plate' => $vehicle['license_plate']],
+                array_merge($vehicle, [
+                    'status' => 'available',
+                    'mileage' => rand(5000, 50000),
+                    'image' => $images[$index % count($images)],
+                ])
+            );
         }
     }
 }

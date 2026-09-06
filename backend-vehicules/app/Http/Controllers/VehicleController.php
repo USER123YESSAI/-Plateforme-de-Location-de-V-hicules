@@ -49,7 +49,15 @@ class VehicleController extends Controller
             });
         }
 
-        $user = auth('api')->user();
+        $user = null;
+        try {
+            if (request()->bearerToken()) {
+                $user = auth('api')->user();
+            }
+        } catch (\Throwable $e) {
+            $user = null;
+        }
+
         if ($user && $user->role === 'admin') {
             if ($request->filled('status')) {
                 $query->where('status', $request->status);
