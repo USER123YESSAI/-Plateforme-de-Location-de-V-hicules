@@ -1,53 +1,200 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import {
+  Car,
+  CalendarCheck,
+  User,
+  LogOut,
+  Globe,
+  Menu,
+  X,
+  PlusCircle,
+} from "lucide-react";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     if (!loading) {
-      if (!user) router.push('/login');
-      else if (user.role !== 'client') router.push('/vehicles');
+      if (!user) router.push("/login");
+      else if (user.role !== "client") router.push("/vehicles");
     }
   }, [user, loading, router]);
 
-  if (loading || !user || user.role !== 'client') {
-    return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
+  // Fermer le menu mobile lors du changement de page
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  if (loading || !user || user.role !== "client") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background text-muted-foreground">
+        <div className="flex items-center gap-3">
+          <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          <span>Chargement de votre espace...</span>
+        </div>
+      </div>
+    );
   }
 
+  const navItems = [
+    { href: "/vehicles", label: "Catalogue Véhicules", icon: Car },
+    { href: "/client/my-rentals", label: "Mes Locations", icon: CalendarCheck },
+    { href: "/client/profile", label: "Mon Profil", icon: User },
+  ];
+
+  const isNavActive = (href: string) => {
+    if (href === "/vehicles") {
+      return pathname?.startsWith("/vehicles");
+    }
+    return pathname === href || pathname?.startsWith(href);
+  };
+
   return (
-    <div className="flex h-screen overflow-hidden bg-muted/40">
-      <aside className="w-64 bg-background border-r flex flex-col h-full">
-        <div className="p-6 border-b">
-          <h2 className="text-2xl font-bold text-primary">Location Express</h2>
-          <p className="text-sm text-muted-foreground mt-1">Espace Client</p>
+    <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-muted/20">
+      {/* TopBar Mobile */}
+      <header className="md:hidden flex items-center justify-between px-4 py-3 bg-background border-b z-30 shrink-0">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
+            <Car className="h-4 w-4" />
+          </div>
+          <span className="font-bold text-base bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+            Location Express
+          </span>
+        </Link>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="p-1.5"
+          aria-label="Ouvrir le menu"
+        >
+          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </Button>
+      </header>
+
+      {/* Backdrop Mobile Drawer */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-background/80 backdrop-blur-xs z-40 animate-in fade-in"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Sidebar (Desktop fixe + Mobile Drawer) */}
+      <aside
+        className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-background border-r flex flex-col justify-between transition-transform duration-300 ease-in-out ${
+          mobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full md:translate-x-0"
+        }`}
+      >
+        {/* En-tête Sidebar */}
+        <div>
+          <div className="p-6 border-b flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-blue-600 text-white shadow-md shadow-primary/20">
+                <Car className="h-5 w-5" />
+              </div>
+              <div>
+                <span className="text-lg font-extrabold tracking-tight text-foreground block leading-tight">
+                  Location Express
+                </span>
+                <span className="text-xs text-primary font-semibold tracking-wide">
+                  Espace Client
+                </span>
+              </div>
+            </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setMobileOpen(false)}
+              className="md:hidden p-1.5"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Navigation Items */}
+          <nav className="p-4 space-y-1.5">
+            {navItems.map((item) => {
+              const active = isNavActive(item.href);
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                    active
+                      ? "bg-primary text-primary-foreground shadow-xs font-semibold"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                  }`}
+                >
+                  <Icon className={`h-4 w-4 ${active ? "text-primary-foreground" : "text-muted-foreground"}`} />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+
+            <div className="pt-3">
+              <Link href="/vehicles">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full flex items-center justify-center gap-2 border-primary/30 text-primary hover:bg-primary/10"
+                >
+                  <PlusCircle className="h-4 w-4" />
+                  <span>Nouvelle Réservation</span>
+                </Button>
+              </Link>
+            </div>
+          </nav>
         </div>
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-          <Link href="/client/vehicles" className="block p-2 rounded hover:bg-accent text-sm font-medium">
-            Véhicules
+
+        {/* Pied de Sidebar : Profil & Déconnexion */}
+        <div className="p-4 border-t space-y-3">
+          <Link
+            href="/"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+          >
+            <Globe className="h-3.5 w-3.5" />
+            <span>Voir le site public</span>
           </Link>
-          <Link href="/client/my-rentals" className="block p-2 rounded hover:bg-accent text-sm font-medium">
-            Mes Locations
-          </Link>
-          <Link href="/client/profile" className="block p-2 rounded hover:bg-accent text-sm font-medium">
-            Mon Profil
-          </Link>
-        </nav>
-        <div className="p-4 border-t">
-          <Link href="/client/vehicles" className="block w-full mb-2">
-            <Button variant="outline" className="w-full">Nouvelle Réservation</Button>
-          </Link>
-          <Button variant="ghost" className="w-full" onClick={logout}>Déconnexion</Button>
+
+          <div className="flex items-center justify-between p-2.5 rounded-xl bg-muted/40 border">
+            <div className="flex items-center gap-2.5 overflow-hidden">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-primary shrink-0">
+                <User className="h-4 w-4" />
+              </div>
+              <div className="overflow-hidden">
+                <p className="text-xs font-bold text-foreground truncate">{user.name}</p>
+                <p className="text-[10px] text-muted-foreground truncate">{user.email}</p>
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={logout}
+              className="p-1.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+              title="Se déconnecter"
+            >
+              <LogOut className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </aside>
-      <main className="flex-1 p-8 overflow-y-auto h-full">
-        {children}
+
+      {/* Main Content Area */}
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 h-full">
+        <div className="max-w-6xl mx-auto">
+          {children}
+        </div>
       </main>
     </div>
   );

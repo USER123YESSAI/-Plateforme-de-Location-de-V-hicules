@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { Payment } from "@/types/payment";
 import { toast } from "sonner";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { SkeletonTable } from "@/components/ui/skeleton";
 
 export default function AdminPaymentsPage() {
   const [payments, setPayments] = useState<Payment[]>([]);
@@ -48,20 +50,19 @@ export default function AdminPaymentsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Gestion des Paiements</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Gestion des Paiements</h1>
+          <p className="text-sm text-muted-foreground">Consultez l'historique des transactions et gérez les remboursements.</p>
+        </div>
       </div>
 
       <div className="bg-card rounded-lg border shadow-sm overflow-hidden">
-        {loading ? (
-          <div className="p-8 text-center text-muted-foreground">Chargement des paiements...</div>
-        ) : payments.length === 0 ? (
-          <div className="p-8 text-center text-muted-foreground">Aucun paiement enregistré.</div>
-        ) : (
+        <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
+                <TableHead className="w-16">ID</TableHead>
                 <TableHead>Client</TableHead>
                 <TableHead>Véhicule</TableHead>
                 <TableHead>Montant</TableHead>
@@ -73,21 +74,31 @@ export default function AdminPaymentsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {payments.map((payment) => (
+              {loading ? (
+                <SkeletonTable rows={5} columns={9} />
+              ) : payments.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={9} className="text-center py-12 text-muted-foreground">
+                    Aucun paiement enregistré pour le moment.
+                  </TableCell>
+                </TableRow>
+              ) : payments.map((payment) => (
                 <TableRow key={payment.id}>
-                  <TableCell>{payment.id}</TableCell>
-                  <TableCell className="font-medium">
+                  <TableCell className="font-mono text-xs text-muted-foreground">#{payment.id}</TableCell>
+                  <TableCell className="font-medium whitespace-nowrap">
                     {payment.rental?.user?.name || "Client Supprimé"}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-nowrap">
                     {payment.rental?.vehicle ? `${payment.rental.vehicle.brand} ${payment.rental.vehicle.model}` : "Véhicule Supprimé"}
                   </TableCell>
-                  <TableCell className="font-bold">{formatPrice(payment.amount)}</TableCell>
-                  <TableCell className="capitalize">{payment.payment_method}</TableCell>
-                  <TableCell className="font-mono text-xs">{payment.transaction_id || "-"}</TableCell>
-                  <TableCell>{new Date(payment.paid_at || payment.created_at).toLocaleDateString('fr-FR')}</TableCell>
+                  <TableCell className="font-bold whitespace-nowrap">{formatPrice(payment.amount)}</TableCell>
+                  <TableCell className="capitalize whitespace-nowrap">{payment.payment_method}</TableCell>
+                  <TableCell className="font-mono text-xs text-muted-foreground whitespace-nowrap">{payment.transaction_id || "-"}</TableCell>
+                  <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
+                    {new Date(payment.paid_at || payment.created_at).toLocaleDateString('fr-FR')}
+                  </TableCell>
                   <TableCell>
-                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${
                       payment.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
                       payment.status === 'refunded' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400' :
                       payment.status === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400' :
@@ -107,38 +118,21 @@ export default function AdminPaymentsPage() {
               ))}
             </TableBody>
           </Table>
-        )}
+        </div>
       </div>
 
-      {/* Confirmation Modal Remboursement */}
-      {refundingId && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-card rounded-lg border shadow-lg max-w-md w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-150">
-            <h3 className="text-lg font-bold text-destructive">Confirmer le remboursement</h3>
-            <p className="text-sm text-muted-foreground">
-              Êtes-vous sûr de vouloir rembourser ce paiement ? Cette action annulera la réservation et libérera le véhicule dans la flotte.
-            </p>
-            <div className="flex justify-end gap-2 pt-2">
-              <Button 
-                type="button" 
-                variant="outline" 
-                onClick={() => setRefundingId(null)}
-                disabled={submittingRefund}
-              >
-                Annuler
-              </Button>
-              <Button 
-                type="button" 
-                variant="destructive" 
-                onClick={confirmRefund}
-                disabled={submittingRefund}
-              >
-                {submittingRefund ? "Remboursement..." : "Confirmer le remboursement"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmDialog
+        open={refundingId !== null}
+        onOpenChange={(open) => {
+          if (!open && !submittingRefund) setRefundingId(null);
+        }}
+        title="Confirmer le remboursement"
+        description="Êtes-vous certain de vouloir rembourser ce paiement ? Cette action annulera la réservation et libérera immédiatement le véhicule dans la flotte."
+        confirmText="Confirmer le remboursement"
+        variant="destructive"
+        loading={submittingRefund}
+        onConfirm={confirmRefund}
+      />
     </div>
   );
 }

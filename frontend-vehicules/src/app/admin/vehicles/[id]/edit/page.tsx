@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter, useParams } from "next/navigation";
 import { getImageUrl } from "@/lib/utils";
+import { toast } from "sonner";
+import { VehicleImage } from "@/components/ui/vehicle-image";
 
 interface Category {
   id: number;
@@ -38,7 +40,6 @@ export default function EditVehiclePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch vehicle
         const vehicleResponse = await api.get(`/vehicles/${params.id}`);
         const vehicle = vehicleResponse.data.data || vehicleResponse.data;
         
@@ -46,24 +47,24 @@ export default function EditVehiclePage() {
           brand: vehicle.brand,
           model: vehicle.model,
           license_plate: vehicle.license_plate,
-          year: vehicle.year,
-          daily_rate: vehicle.daily_rate,
-          category_id: vehicle.category_id,
+          year: String(vehicle.year),
+          daily_rate: String(vehicle.daily_rate),
+          category_id: String(vehicle.category_id),
           fuel_type: vehicle.fuel_type,
           transmission: vehicle.transmission,
-          seats: vehicle.seats,
-          mileage: vehicle.mileage,
+          seats: String(vehicle.seats),
+          mileage: String(vehicle.mileage),
           status: vehicle.status
         });
         setCurrentImage(vehicle.image);
 
-        // Fetch categories
         const categoriesResponse = await api.get('/categories');
         const categoriesData = categoriesResponse.data.data || categoriesResponse.data || [];
         setCategories(Array.isArray(categoriesData) ? categoriesData : []);
       } catch (error) {
         console.error("[Location Express] Failed to fetch vehicle data for editing:", error);
         setError("Erreur lors de la récupération des données");
+        toast.error("Impossible de charger les données du véhicule");
       } finally {
         setFetchLoading(false);
       }
@@ -89,6 +90,7 @@ export default function EditVehiclePage() {
           'Content-Type': 'multipart/form-data'
         }
       });
+      toast.success("Véhicule modifié avec succès !");
       router.push('/admin/vehicles');
     } catch (error: any) {
       console.error("[Location Express] Failed to update vehicle:", error);
@@ -96,136 +98,204 @@ export default function EditVehiclePage() {
                          error.response?.data?.error || 
                          "Erreur lors de la modification du véhicule";
       setError(errorMessage);
-      alert(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   if (fetchLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
+    return (
+      <div className="min-h-[400px] flex items-center justify-center">
+        <div className="text-center space-y-2">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto" />
+          <p className="text-sm text-muted-foreground">Chargement des données du véhicule...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight">Modifier le Véhicule</h1>
+    <div className="max-w-3xl mx-auto space-y-6">
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Modifier le Véhicule</h1>
+        <p className="text-sm text-muted-foreground">Mettez à jour les caractéristiques, tarifs et disponibilité de ce véhicule.</p>
+      </div>
+
       {error && (
-        <div className="p-4 bg-destructive/10 text-destructive rounded-md">
+        <div className="p-4 bg-destructive/10 text-destructive rounded-md text-sm">
           {error}
         </div>
       )}
-      <form onSubmit={handleSubmit} className="bg-card p-6 rounded-lg border shadow-sm space-y-4">
-        <div>
-          <label className="text-sm font-medium">Image actuelle</label>
+
+      <form onSubmit={handleSubmit} className="bg-card p-6 sm:p-8 rounded-lg border shadow-sm space-y-6">
+        <div className="flex flex-col sm:flex-row gap-6 items-start">
           {currentImage && (
-            <img 
-              src={getImageUrl(currentImage) || ""} 
-              alt="Image actuelle"
-              className="mt-2 w-32 h-24 object-cover rounded border bg-muted"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
-            />
+            <div className="w-32 h-24 rounded-lg overflow-hidden border bg-muted flex-shrink-0">
+              <VehicleImage 
+                src={getImageUrl(currentImage)} 
+                alt={`${formData.brand} ${formData.model}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
           )}
+          <div className="flex-1 space-y-1">
+            <label className="text-sm font-medium">Changer l'image (optionnel)</label>
+            <Input 
+              type="file" 
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files?.[0] || null)} 
+              className="mt-1 file:text-primary file:font-semibold" 
+            />
+            <p className="text-xs text-muted-foreground">Laissez vide pour conserver l'image actuelle.</p>
+          </div>
         </div>
-        <div>
-          <label className="text-sm font-medium">Changer l'image</label>
-          <Input 
-            type="file" 
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files?.[0] || null)} 
-            className="mt-1" 
-          />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Catégorie</label>
-          <select 
-            value={formData.category_id} 
-            onChange={(e) => setFormData({...formData, category_id: e.target.value})} 
-            required 
-            className="mt-1 w-full p-2 border rounded-md"
-          >
-            {categories.length === 0 ? (
-              <option value="">Chargement des catégories...</option>
-            ) : (
-              categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>{cat.name}</option>
-              ))
-            )}
-          </select>
-        </div>
-        <div>
-          <label className="text-sm font-medium">Marque</label>
-          <Input value={formData.brand} onChange={(e) => setFormData({...formData, brand: e.target.value})} required className="mt-1" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Modèle</label>
-          <Input value={formData.model} onChange={(e) => setFormData({...formData, model: e.target.value})} required className="mt-1" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Immatriculation</label>
-          <Input value={formData.license_plate} onChange={(e) => setFormData({...formData, license_plate: e.target.value})} required className="mt-1" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Année</label>
-          <Input type="number" value={formData.year} onChange={(e) => setFormData({...formData, year: e.target.value})} required className="mt-1" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Prix par jour (FCFA)</label>
-          <Input type="number" step="0.01" value={formData.daily_rate} onChange={(e) => setFormData({...formData, daily_rate: e.target.value})} required className="mt-1" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Type de carburant</label>
-          <select 
-            value={formData.fuel_type} 
-            onChange={(e) => setFormData({...formData, fuel_type: e.target.value})} 
-            required 
-            className="mt-1 w-full p-2 border rounded-md"
-          >
-            <option value="essence">Essence</option>
-            <option value="diesel">Diesel</option>
-            <option value="electric">Électrique</option>
-            <option value="hybrid">Hybride</option>
-          </select>
-        </div>
-        <div>
-          <label className="text-sm font-medium">Transmission</label>
-          <select 
-            value={formData.transmission} 
-            onChange={(e) => setFormData({...formData, transmission: e.target.value})} 
-            required 
-            className="mt-1 w-full p-2 border rounded-md"
-          >
-            <option value="manual">Manuelle</option>
-            <option value="automatic">Automatique</option>
-          </select>
-        </div>
-        <div>
-          <label className="text-sm font-medium">Nombre de places</label>
-          <Input type="number" value={formData.seats} onChange={(e) => setFormData({...formData, seats: e.target.value})} required className="mt-1" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Kilométrage</label>
-          <Input type="number" value={formData.mileage} onChange={(e) => setFormData({...formData, mileage: e.target.value})} required className="mt-1" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Statut</label>
-          <select 
-            value={formData.status} 
-            onChange={(e) => setFormData({...formData, status: e.target.value})} 
-            required 
-            className="mt-1 w-full p-2 border rounded-md"
-          >
-            <option value="available">Disponible</option>
-            <option value="rented">Loué</option>
-            <option value="maintenance">Maintenance</option>
-            <option value="unavailable">Indisponible</option>
-          </select>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="text-sm font-medium">Catégorie</label>
+            <select 
+              value={formData.category_id} 
+              onChange={(e) => setFormData({...formData, category_id: e.target.value})} 
+              required 
+              className="mt-1 w-full p-2 border rounded-md bg-background text-sm focus:ring-1 focus:ring-primary"
+            >
+              {categories.length === 0 ? (
+                <option value="">Chargement des catégories...</option>
+              ) : (
+                categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>{cat.name}</option>
+                ))
+              )}
+            </select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Statut</label>
+            <select 
+              value={formData.status} 
+              onChange={(e) => setFormData({...formData, status: e.target.value})} 
+              required 
+              className="mt-1 w-full p-2 border rounded-md bg-background text-sm focus:ring-1 focus:ring-primary"
+            >
+              <option value="available">Disponible</option>
+              <option value="rented">En location</option>
+              <option value="maintenance">En maintenance</option>
+              <option value="unavailable">Indisponible</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Marque</label>
+            <Input 
+              value={formData.brand} 
+              onChange={(e) => setFormData({...formData, brand: e.target.value})} 
+              required 
+              className="mt-1" 
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Modèle</label>
+            <Input 
+              value={formData.model} 
+              onChange={(e) => setFormData({...formData, model: e.target.value})} 
+              required 
+              className="mt-1" 
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Immatriculation</label>
+            <Input 
+              value={formData.license_plate} 
+              onChange={(e) => setFormData({...formData, license_plate: e.target.value})} 
+              required 
+              className="mt-1 uppercase" 
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Année</label>
+            <Input 
+              type="number" 
+              value={formData.year} 
+              onChange={(e) => setFormData({...formData, year: e.target.value})} 
+              required 
+              className="mt-1" 
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Tarif journalier (FCFA)</label>
+            <Input 
+              type="number" 
+              step="1" 
+              value={formData.daily_rate} 
+              onChange={(e) => setFormData({...formData, daily_rate: e.target.value})} 
+              required 
+              className="mt-1" 
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Carburant</label>
+            <select 
+              value={formData.fuel_type} 
+              onChange={(e) => setFormData({...formData, fuel_type: e.target.value})} 
+              required 
+              className="mt-1 w-full p-2 border rounded-md bg-background text-sm focus:ring-1 focus:ring-primary"
+            >
+              <option value="essence">Essence</option>
+              <option value="diesel">Diesel</option>
+              <option value="electric">Électrique</option>
+              <option value="hybrid">Hybride</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Transmission</label>
+            <select 
+              value={formData.transmission} 
+              onChange={(e) => setFormData({...formData, transmission: e.target.value})} 
+              required 
+              className="mt-1 w-full p-2 border rounded-md bg-background text-sm focus:ring-1 focus:ring-primary"
+            >
+              <option value="manual">Manuelle</option>
+              <option value="automatic">Automatique</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Nombre de places</label>
+            <Input 
+              type="number" 
+              value={formData.seats} 
+              onChange={(e) => setFormData({...formData, seats: e.target.value})} 
+              required 
+              className="mt-1" 
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Kilométrage (km)</label>
+            <Input 
+              type="number" 
+              value={formData.mileage} 
+              onChange={(e) => setFormData({...formData, mileage: e.target.value})} 
+              required 
+              className="mt-1" 
+            />
+          </div>
         </div>
         
-        <div className="pt-4 flex justify-end gap-2">
-          <Button variant="outline" type="button" onClick={() => router.push('/admin/vehicles')}>Annuler</Button>
-          <Button type="submit" disabled={loading}>{loading ? 'Modification...' : 'Enregistrer'}</Button>
+        <div className="pt-4 border-t flex justify-end gap-3">
+          <Button variant="outline" type="button" onClick={() => router.push('/admin/vehicles')}>
+            Annuler
+          </Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? 'Enregistrement...' : 'Enregistrer les modifications'}
+          </Button>
         </div>
       </form>
     </div>
