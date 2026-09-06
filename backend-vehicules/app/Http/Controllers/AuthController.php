@@ -40,8 +40,16 @@ class AuthController extends Controller
             'address' => $request->address,
         ]);
 
-        // Utilisation de la facade Tymon
-        $token = JWTAuth::fromUser($user);
+        // Utilisation de la facade Tymon avec gestion d'erreur robuste
+        try {
+            $token = JWTAuth::fromUser($user);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("JWT Token generation error: " . $e->getMessage());
+            return response()->json([
+                'message' => 'Utilisateur créé mais erreur lors de la génération du token.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
 
         return response()->json([
             'message' => 'Utilisateur créé avec succès',
