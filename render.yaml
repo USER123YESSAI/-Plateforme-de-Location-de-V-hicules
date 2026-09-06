@@ -14,10 +14,22 @@ services:
         value: production
       - key: APP_DEBUG
         value: false
+      - key: APP_KEY
+        value: base64:Cp677/vtSe/XWBR22AcUuL/n08dKm6g02xUScFxUkVI=
+      - key: JWT_SECRET
+        value: sPKHqQeFskR9lBMa784GPDd9V87vN2FGHw3YNFUY4Dxo6f5gf2ttZYLEP8Tib3b4
       - key: DB_CONNECTION
         value: mysql
+      - key: DB_HOST
+        sync: false
       - key: DB_PORT
         value: 4000
+      - key: DB_DATABASE
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
       - key: MYSQL_ATTR_SSL_CA
         value: /etc/ssl/certs/ca-certificates.crt
       - key: MYSQL_ATTR_SSL_VERIFY_SERVER_CERT

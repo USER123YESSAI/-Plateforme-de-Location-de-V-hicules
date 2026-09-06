@@ -30,9 +30,10 @@ WORKDIR /var/www/html
 # Copie des fichiers de l'application
 COPY . .
 
-# Permissions pour storage et bootstrap/cache
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Permissions pour storage, bootstrap/cache et database (pour SQLite et sessions)
+RUN touch /var/www/html/database/database.sqlite \
+    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 
 # Installation des dépendances PHP en mode production
 RUN composer install --no-dev --optimize-autoloader --no-interaction

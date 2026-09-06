@@ -22,7 +22,9 @@ php artisan db:seed --force || echo "Avertissement: Les seeders ont déjà été
 echo "Mise en cache de la configuration et des routes..."
 php artisan config:cache || true
 php artisan route:cache || true
-php artisan view:cache || true
+# Garantir que www-data possède toujours les droits d'écriture sur SQLite et storage
+chown -R www-data:www-data /var/www/html/database /var/www/html/storage /var/www/html/bootstrap/cache || true
+chmod -R 775 /var/www/html/database /var/www/html/storage /var/www/html/bootstrap/cache || true
 
 echo "Démarrage d'Apache sur le port ${RENDER_PORT}..."
 exec apache2-foreground

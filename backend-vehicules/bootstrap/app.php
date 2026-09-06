@@ -19,11 +19,22 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
             if ($request->is('api/*')) {
+                if ($e instanceof \Illuminate\Validation\ValidationException) {
+                    return null;
+                }
+                if ($e instanceof \Illuminate\Auth\AuthenticationException) {
+                    return null;
+                }
+
+                $status = $e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface
+                    ? $e->getStatusCode()
+                    : 500;
+
                 return response()->json([
                     'error' => $e->getMessage(),
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                ], 500);
+                    'file' => config('app.debug') ? $e->getFile() : null,
+                    'line' => config('app.debug') ? $e->getLine() : null,
+                ], $status);
             }
         });
     })->create();

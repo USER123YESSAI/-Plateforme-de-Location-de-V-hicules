@@ -31,12 +31,13 @@ export default function RegisterPage() {
       await api.post('/auth/register', { name, email, password, password_confirmation: passwordConfirmation });
       router.push('/login');
     } catch (err: any) {
-      // Laravel renvoie un tableau d'erreurs par champ (422 Unprocessable Entity)
       if (err.response?.status === 422 && err.response?.data) {
-        const firstErrorKey = Object.keys(err.response.data)[0];
-        setError(err.response.data[firstErrorKey][0]);
+        const errorData = err.response.data;
+        const firstKey = Object.keys(errorData)[0];
+        const val = errorData[firstKey];
+        setError(Array.isArray(val) ? val[0] : (typeof val === 'string' ? val : 'Erreur de validation.'));
       } else {
-        setError(err.response?.data?.message || 'Erreur lors de l\'inscription');
+        setError(err.response?.data?.error || err.response?.data?.message || 'Erreur lors de l\'inscription');
       }
     } finally {
       setLoading(false);
