@@ -1,0 +1,92 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Rental;
+use App\Models\User;
+use App\Models\Vehicle;
+use Illuminate\Database\Seeder;
+
+class RentalSeeder extends Seeder
+{
+    public function run(): void
+    {
+        // 1. On cherche 'client' (et non 'user') pour correspondre à votre ENUM
+        $user = User::where('role', 'client')->first() ?: User::first();
+
+        // 2. SÉCURITÉ : Si aucun utilisateur, on crée un 'client'
+        if (!$user) {
+            $user = User::create([
+                'name' => 'Client Test',
+                'email' => 'client@test.com',
+                'password' => bcrypt('password'),
+                'role' => 'client' // CORRIGÉ : 'client' au lieu de 'user'
+            ]);
+        }
+
+        $rentals = [
+            [
+                "user_id" => $user->id,
+                "vehicle_id" => 1,
+                "start_date" => "2025-02-01",
+                "end_date" => "2025-02-05",
+                "pickup_location" => "Aéroport Dakar",
+                "return_location" => "Aéroport Dakar",
+                "daily_rate" => 20000,
+                "total_days" => 4,
+                "subtotal" => 80000,
+                "total_amount" => 80000,
+                "status" => "completed",
+                "notes" => "Arrivée prévue à 14h"
+            ],
+            [
+                "user_id" => $user->id,
+                "vehicle_id" => 8,
+                "start_date" => "2025-02-10",
+                "end_date" => "2025-02-15",
+                "pickup_location" => "Dakar Plateau",
+                "return_location" => "Aéroport Dakar",
+                "daily_rate" => 120000,
+                "total_days" => 5,
+                "subtotal" => 600000,
+                "total_amount" => 600000,
+                "status" => "confirmed",
+                "notes" => "Client VIP"
+            ],
+            [
+                "user_id" => $user->id,
+                "vehicle_id" => 5,
+                "start_date" => "2025-03-01",
+                "end_date" => "2025-03-07",
+                "pickup_location" => "AIBD",
+                "return_location" => "AIBD",
+                "daily_rate" => 65000,
+                "total_days" => 6,
+                "subtotal" => 390000,
+                "total_amount" => 390000,
+                "status" => "active",
+                "notes" => "Besoin d'un siège bébé"
+            ],
+            [
+                "user_id" => $user->id,
+                "vehicle_id" => 10,
+                "start_date" => "2025-03-10",
+                "end_date" => "2025-03-12",
+                "pickup_location" => "Dakar",
+                "return_location" => "Dakar",
+                "daily_rate" => 100000,
+                "total_days" => 2,
+                "subtotal" => 200000,
+                "total_amount" => 200000,
+                "status" => "pending",
+                "notes" => "Recharge Tesla demandée"
+            ]
+        ];
+
+        foreach ($rentals as $rental) {
+            if (Vehicle::where('id', $rental['vehicle_id'])->exists()) {
+                Rental::create($rental);
+            }
+        }
+    }
+}

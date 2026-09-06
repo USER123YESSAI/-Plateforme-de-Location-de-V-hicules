@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Base de données MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: location_express_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: plateforme de location de véhicules
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - location_net
+
+  # API Backend Laravel
+  backend:
+    image: php:8.2-cli
+    container_name: location_express_backend
+    restart: unless-stopped
+    working_dir: /var/www/backend
+    volumes:
+      - ./backend-Véhicules:/var/www/backend
+    ports:
+      - "8000:8000"
+    command: bash -c "docker-php-ext-install pdo pdo_mysql && php artisan serve --host=0.0.0.0 --port=8000"
+    depends_on:
+      - mysql
+    networks:
+      - location_net
+
+  # Frontend Next.js
+  frontend:
+    image: node:18-alpine
+    container_name: location_express_frontend
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./frontend-vehicules:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - backend
+    networks:
+      - location_net
+
+volumes:
+  mysql_data:
+
+networks:
+  location_net:
+    driver: bridge
