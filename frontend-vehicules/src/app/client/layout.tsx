@@ -68,15 +68,14 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         {/* En-tête Brand */}
         <div className="h-16 px-5 border-b flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2" aria-label="Toumaï Drive">
-            <div className="relative h-11 w-36 overflow-hidden shrink-0">
-              <Image
-                src="/toumai-drive-logo.jpg"
-                alt="Toumaï Drive"
-                fill
-                className="object-contain scale-125 origin-left"
-                priority
-              />
-            </div>
+            <Image
+              src="/toumai-drive-logo.jpg"
+              alt="Toumaï Drive"
+              width={140}
+              height={85}
+              className="h-10 sm:h-11 w-auto object-contain"
+              priority
+            />
             <span className="text-[10px] bg-primary/10 text-primary font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
               Client
             </span>

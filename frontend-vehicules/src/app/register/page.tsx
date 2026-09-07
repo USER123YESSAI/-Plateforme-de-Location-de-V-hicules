@@ -76,12 +76,13 @@ export default function RegisterPage() {
         </div>
         <div className="bg-card rounded-2xl shadow-xl p-6 sm:p-8 space-y-6 border">
           <div className="text-center">
-            <div className="mx-auto relative h-20 w-52 overflow-hidden mb-2">
+            <div className="flex justify-center mb-3">
               <Image
                 src="/toumai-drive-logo.jpg"
                 alt="Toumaï Drive"
-                fill
-                className="object-contain scale-125"
+                width={220}
+                height={134}
+                className="h-20 sm:h-24 w-auto object-contain drop-shadow-sm"
                 priority
               />
             </div>

@@ -62,23 +62,22 @@ export function Navbar() {
           : "border-b border-border/40 bg-background/80 backdrop-blur-md"
       }`}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto flex h-16 sm:h-18 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* 1. Logo & Marque (Gauche) */}
         <div className="flex items-center shrink-0">
           <Link
             href="/"
-            className="group flex items-center transition-transform duration-200 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-xl"
+            className="group flex items-center transition-transform duration-200 hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-xl py-1"
             aria-label="Toumaï Drive - Retour à l'accueil"
           >
-            <div className="relative h-12 sm:h-14 w-32 sm:w-44 overflow-hidden flex items-center justify-center shrink-0">
-              <Image
-                src="/toumai-drive-logo.jpg"
-                alt="Toumaï Drive"
-                fill
-                className="object-contain scale-125 transition-transform duration-200 group-hover:scale-130"
-                priority
-              />
-            </div>
+            <Image
+              src="/toumai-drive-logo.jpg"
+              alt="Toumaï Drive"
+              width={180}
+              height={110}
+              className="h-11 sm:h-13 w-auto object-contain transition-all duration-200 drop-shadow-xs"
+              priority
+            />
           </Link>
         </div>
 

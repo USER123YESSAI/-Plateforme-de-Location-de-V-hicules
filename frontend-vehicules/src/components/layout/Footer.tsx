@@ -10,14 +10,13 @@ export function Footer() {
           {/* Marque & Description */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center group" aria-label="Toumaï Drive">
-              <div className="relative h-14 w-44 overflow-hidden flex items-center shrink-0">
-                <Image
-                  src="/toumai-drive-logo.jpg"
-                  alt="Toumaï Drive"
-                  fill
-                  className="object-contain scale-125 origin-left"
-                />
-              </div>
+              <Image
+                src="/toumai-drive-logo.jpg"
+                alt="Toumaï Drive"
+                width={200}
+                height={122}
+                className="h-14 sm:h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+              />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
               Votre partenaire de mobilité premium au Tchad. Réservation en ligne instantanée, véhicules récents, tarifs transparents et assistance 7j/7.
