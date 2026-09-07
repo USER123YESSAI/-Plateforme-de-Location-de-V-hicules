@@ -4,38 +4,38 @@ services:
   # Base de données MySQL
   mysql:
     image: mysql:8.0
-    container_name: location_express_mysql
+    container_name: toumai_drive_mysql
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: plateforme de location de véhicules
+      MYSQL_DATABASE: toumai_drive
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
-      - location_net
+      - toumai_net
 
   # API Backend Laravel
   backend:
     image: php:8.2-cli
-    container_name: location_express_backend
+    container_name: toumai_drive_backend
     restart: unless-stopped
     working_dir: /var/www/backend
     volumes:
-      - ./backend-Véhicules:/var/www/backend
+      - ./backend-vehicules:/var/www/backend
     ports:
       - "8000:8000"
     command: bash -c "docker-php-ext-install pdo pdo_mysql && php artisan serve --host=0.0.0.0 --port=8000"
     depends_on:
       - mysql
     networks:
-      - location_net
+      - toumai_net
 
   # Frontend Next.js
   frontend:
     image: node:18-alpine
-    container_name: location_express_frontend
+    container_name: toumai_drive_frontend
     restart: unless-stopped
     working_dir: /app
     volumes:
@@ -46,11 +46,11 @@ services:
     depends_on:
       - backend
     networks:
-      - location_net
+      - toumai_net
 
 volumes:
   mysql_data:
 
 networks:
-  location_net:
+  toumai_net:
     driver: bridge
