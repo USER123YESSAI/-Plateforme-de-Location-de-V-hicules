@@ -44,10 +44,10 @@ type Quote = {
 };
 
 const AGENCIES = [
-  "Aéroport Blaise Diagne (DSS)",
-  "Dakar Plateau - Centre-ville",
-  "Dakar Almadies",
-  "Saly Portudal - Mbour",
+  "Aéroport Hassan Djamous (NDJ)",
+  "N'Djamena Centre-ville - Av. Charles de Gaulle",
+  "N'Djamena Sabangali",
+  "Moundou Centre",
 ];
 
 export default function VehicleDetailPage() {

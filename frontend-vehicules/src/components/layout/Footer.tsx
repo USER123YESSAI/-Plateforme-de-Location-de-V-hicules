@@ -17,7 +17,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
-              Votre partenaire de mobilité premium au Sénégal. Réservation en ligne instantanée, véhicules récents, tarifs transparents et assistance 24h/24 et 7j/7.
+              Votre partenaire de mobilité premium au Tchad. Réservation en ligne instantanée, véhicules récents, tarifs transparents et assistance 24h/24 et 7j/7.
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2">
               <div className="flex items-center gap-1.5">
@@ -63,7 +63,28 @@ export function Footer() {
             </ul>
           </div>
 
-         
+          {/* Nos Agences */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground">Nos Agences</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <span>Aéroport Hassan Djamous (NDJ)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <span>N&apos;Djamena Centre-ville</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <span>N&apos;Djamena Sabangali</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <span>Moundou Centre</span>
+              </li>
+            </ul>
+          </div>
 
           {/* Contact */}
           <div className="space-y-3">
@@ -71,11 +92,11 @@ export function Footer() {
             <ul className="space-y-2.5 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary shrink-0" />
-                <span>+221 33 800 00 00</span>
+                <span>+235 66 00 00 00</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary shrink-0" />
-                <span>contact@locationexpress.sn</span>
+                <span>contact@locationexpress.td</span>
               </li>
               <li className="pt-2">
                 <span className="text-xs bg-muted/70 px-2.5 py-1 rounded-md text-foreground font-medium inline-block">

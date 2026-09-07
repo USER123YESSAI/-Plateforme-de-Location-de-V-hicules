@@ -153,7 +153,7 @@ export default function ProfilePage() {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="mt-1 rounded-xl"
-                      placeholder="+221 77 000 00 00"
+                      placeholder="+235 66 00 00 00"
                     />
                   </div>
 
@@ -164,7 +164,7 @@ export default function ProfilePage() {
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                       className="mt-1 rounded-xl"
-                      placeholder="Dakar, Sénégal"
+                      placeholder="N'Djamena, Tchad"
                     />
                   </div>
                 </div>

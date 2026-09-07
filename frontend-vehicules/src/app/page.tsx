@@ -34,7 +34,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(tomorrow);
-  const [pickupAgency, setPickupAgency] = useState("Aéroport Blaise Diagne (DSS)");
+  const [pickupAgency, setPickupAgency] = useState("Aéroport Hassan Djamous (NDJ)");
 
   useEffect(() => {
     const loadInitialData = async () => {
@@ -76,7 +76,7 @@ export default function Home() {
           <div className="container mx-auto px-4 text-center max-w-5xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-6 shadow-2xs animate-in fade-in slide-in-from-bottom-2">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Location de véhicules premium & grand public au Sénégal</span>
+              <span>Location de véhicules premium & grand public au Tchad</span>
             </div>
 
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-foreground leading-[1.1] mb-6">
@@ -104,10 +104,10 @@ export default function Home() {
                     onChange={(e) => setPickupAgency(e.target.value)}
                     className="w-full h-11 px-3 rounded-lg border border-input bg-background text-sm font-medium focus:ring-2 focus:ring-primary focus:outline-hidden"
                   >
-                    <option value="Aéroport Blaise Diagne (DSS)">Aéroport Blaise Diagne (DSS)</option>
-                    <option value="Dakar Plateau - Centre-ville">Dakar Plateau - Centre-ville</option>
-                    <option value="Dakar Almadies">Dakar Almadies</option>
-                    <option value="Saly Portudal - Mbour">Saly Portudal - Mbour</option>
+                    <option value="Aéroport Hassan Djamous (NDJ)">Aéroport Hassan Djamous (NDJ)</option>
+                    <option value="N'Djamena Centre-ville - Av. Charles de Gaulle">N&apos;Djamena Centre-ville - Av. Charles de Gaulle</option>
+                    <option value="N'Djamena Sabangali">N&apos;Djamena Sabangali</option>
+                    <option value="Moundou Centre">Moundou Centre</option>
                   </select>
                 </div>
 
@@ -355,7 +355,7 @@ export default function Home() {
               Prêt pour votre prochain voyage ?
             </h2>
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-              Découvrez dès maintenant notre catalogue complet et profitez des meilleurs tarifs de location de véhicules au Sénégal.
+              Découvrez dès maintenant notre catalogue complet et profitez des meilleurs tarifs de location de véhicules au Tchad.
             </p>
             <div className="flex flex-wrap gap-3 justify-center pt-2">
               <Link href="/vehicles">
