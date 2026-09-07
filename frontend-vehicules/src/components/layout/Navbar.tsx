@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -12,12 +12,29 @@ import {
   LayoutDashboard,
   Menu,
   X,
+  ChevronRight,
 } from "lucide-react";
 
 export function Navbar() {
   const { user, logout } = useAuth();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Détection du scroll pour adapter le style de la navbar sticky
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Fermer le menu mobile lors du changement de page
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const navLinks = [
     { href: "/", label: "Accueil" },
@@ -37,11 +54,21 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md shadow-sm transition-all duration-300">
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ease-in-out ${
+        isScrolled
+          ? "border-b border-border/80 bg-background/95 backdrop-blur-md shadow-sm"
+          : "border-b border-border/40 bg-background/80 backdrop-blur-md"
+      }`}
+    >
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
-        <div className="flex items-center gap-8">
-          <Link href="/" className="group flex items-center gap-2.5 transition-transform duration-200 hover:scale-[1.02]">
+        {/* 1. Logo & Marque (Gauche) */}
+        <div className="flex items-center shrink-0">
+          <Link
+            href="/"
+            className="group flex items-center gap-2.5 transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-xl"
+            aria-label="Location Express - Retour à l'accueil"
+          >
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary via-blue-600 to-indigo-600 text-white shadow-md shadow-primary/20 group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300">
               <Car className="h-5 w-5" />
             </div>
@@ -49,67 +76,74 @@ export function Navbar() {
               Location Express
             </span>
           </Link>
-
-          {/* Navigation Desktop */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-            {navLinks.map((link) => {
-              const active = isActive(link.href);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    active
-                      ? "bg-primary/10 text-primary font-semibold shadow-xs"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-
-            {user && user.role === "client" && (
-              <Link
-                href="/client/my-rentals"
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  pathname?.startsWith("/client/my-rentals")
-                    ? "bg-primary/10 text-primary font-semibold shadow-xs"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                }`}
-              >
-                Mes Locations
-              </Link>
-            )}
-          </nav>
         </div>
 
-        {/* User / Auth Actions Desktop */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* 2. Navigation Desktop (Centrée - équilibre les espacements horizontaux) */}
+        <nav
+          className="hidden md:flex items-center justify-center gap-1 lg:gap-1.5"
+          aria-label="Navigation principale"
+        >
+          {navLinks.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                  active
+                    ? "bg-blue-50 text-blue-600 font-semibold shadow-xs dark:bg-blue-950/50 dark:text-blue-400"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+
+          {user && user.role === "client" && (
+            <Link
+              href="/client/my-rentals"
+              className={`relative px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                pathname?.startsWith("/client/my-rentals")
+                  ? "bg-blue-50 text-blue-600 font-semibold shadow-xs dark:bg-blue-950/50 dark:text-blue-400"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+              }`}
+            >
+              Mes Locations
+            </Link>
+          )}
+        </nav>
+
+        {/* 3. Actions Utilisateur / Auth Desktop (Droite) */}
+        <div className="hidden md:flex items-center gap-2.5 shrink-0">
           {user ? (
-            <div className="flex items-center gap-3">
-              {/* Badge Utilisateur */}
-              <div className="flex items-center gap-2 rounded-full border border-border/60 bg-muted/40 px-3.5 py-1.5 text-xs font-medium text-foreground shadow-2xs">
-                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
+            <div className="flex items-center gap-2.5">
+              {/* Badge Utilisateur connecté */}
+              <div className="flex items-center gap-2 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-xs font-medium text-foreground">
+                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
                   <User className="h-3 w-3" />
                 </div>
-                <span>Bonjour, <strong className="font-semibold">{user.name}</strong></span>
-                <span className={`ml-1 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
-                  user.role === "admin"
-                    ? "bg-amber-500/15 text-amber-600 dark:text-amber-400"
-                    : "bg-blue-500/15 text-blue-600 dark:text-blue-400"
-                }`}>
+                <span className="truncate max-w-[130px] font-medium">
+                  {user.name}
+                </span>
+                <span
+                  className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider ${
+                    user.role === "admin"
+                      ? "bg-amber-500/15 text-amber-600 dark:text-amber-400"
+                      : "bg-blue-500/15 text-blue-600 dark:text-blue-400"
+                  }`}
+                >
                   {user.role === "admin" ? "Admin" : "Client"}
                 </span>
               </div>
 
-              {/* Bouton Admin Dashboard */}
+              {/* Accès Espace / Dashboard */}
               {user.role === "admin" ? (
                 <Link href="/admin/dashboard">
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-1.5 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground font-medium transition-all"
+                    className="h-9 flex items-center gap-1.5 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground font-medium transition-all duration-150"
                   >
                     <LayoutDashboard className="h-4 w-4" />
                     Dashboard
@@ -120,7 +154,7 @@ export function Navbar() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-1.5 hover:bg-muted font-medium transition-all"
+                    className="h-9 flex items-center gap-1.5 hover:bg-muted font-medium transition-all duration-150"
                   >
                     <User className="h-4 w-4" />
                     Mon Profil
@@ -133,28 +167,28 @@ export function Navbar() {
                 variant="ghost"
                 size="sm"
                 onClick={logout}
-                className="flex items-center gap-1.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                className="h-9 flex items-center gap-1.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
                 title="Se déconnecter"
               >
                 <LogOut className="h-4 w-4" />
-                <span className="hidden lg:inline">Déconnexion</span>
+                <span className="hidden lg:inline text-xs">Déconnexion</span>
               </Button>
             </div>
           ) : (
-            <div className="flex items-center gap-2.5">
-              <Link href="/login">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="font-medium hover:bg-primary/10 hover:text-primary transition-all"
-                >
-                  Connexion
-                </Button>
+            <div className="flex items-center gap-2">
+              {/* Action Secondaire : Connexion (texte sobre / bouton discret) */}
+              <Link
+                href="/login"
+                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                Connexion
               </Link>
+
+              {/* Action Principale : S'inscrire (bouton bleu affirmé avec ombre légère) */}
               <Link href="/register">
                 <Button
                   size="sm"
-                  className="bg-gradient-to-r from-primary to-blue-600 text-white font-medium shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 hover:opacity-95 transition-all duration-200"
+                  className="h-9 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-sm hover:shadow hover:shadow-blue-600/20 active:scale-[0.99] transition-all duration-150 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
                 >
                   S&apos;inscrire
                 </Button>
@@ -163,24 +197,29 @@ export function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* 4. Bouton Menu Hamburger Mobile (SVG - pas d'emoji) */}
         <div className="flex md:hidden items-center">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-foreground hover:bg-muted rounded-lg"
-            aria-label="Ouvrir le menu"
+            className="p-2 text-foreground hover:bg-muted rounded-xl transition-colors focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label={mobileMenuOpen ? "Fermer le menu de navigation" : "Ouvrir le menu de navigation"}
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6 text-foreground transition-transform duration-200" />
+            ) : (
+              <Menu className="h-6 w-6 text-foreground transition-transform duration-200" />
+            )}
           </Button>
         </div>
       </div>
 
-      {/* Navigation Mobile Drawer */}
+      {/* 5. Tiroir / Menu Mobile Déroulant */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border/40 bg-background/95 backdrop-blur-lg px-4 pt-3 pb-6 shadow-lg transition-all animate-in slide-in-from-top-2 duration-200">
-          <nav className="flex flex-col gap-1">
+        <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl px-4 pt-3 pb-6 shadow-xl transition-all animate-in slide-in-from-top-2 duration-200">
+          <nav className="flex flex-col space-y-1" aria-label="Navigation mobile">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               return (
@@ -188,13 +227,14 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                     active
-                      ? "bg-primary/10 text-primary font-semibold"
+                      ? "bg-blue-50 text-blue-600 font-semibold dark:bg-blue-950/50 dark:text-blue-400"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                   }`}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  {active && <ChevronRight className="h-4 w-4 text-blue-600" />}
                 </Link>
               );
             })}
@@ -203,51 +243,62 @@ export function Navbar() {
               <Link
                 href="/client/my-rentals"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   pathname?.startsWith("/client/my-rentals")
-                    ? "bg-primary/10 text-primary font-semibold"
+                    ? "bg-blue-50 text-blue-600 font-semibold dark:bg-blue-950/50 dark:text-blue-400"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 }`}
               >
-                Mes Locations
+                <span>Mes Locations</span>
+                <ChevronRight className="h-4 w-4 text-blue-600" />
               </Link>
             )}
           </nav>
 
-          {/* Section Utilisateur / Auth Mobile */}
-          <div className="mt-4 pt-4 border-t border-border/40">
+          {/* Actions Auth / Profil Mobile */}
+          <div className="mt-4 pt-4 border-t border-border/50">
             {user ? (
               <div className="flex flex-col gap-3">
-                <div className="flex items-center justify-between px-2">
-                  <div className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-primary">
-                      <User className="h-4 w-4" />
+                <div className="flex items-center gap-3 px-2 py-1 bg-muted/40 rounded-xl">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-primary shrink-0">
+                    <User className="h-4 w-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-foreground truncate">
+                      {user.name}
                     </div>
-                    <div>
-                      <div className="text-sm font-semibold text-foreground">{user.name}</div>
-                      <div className="text-xs text-muted-foreground capitalize">{user.role}</div>
+                    <div className="text-xs text-muted-foreground capitalize">
+                      {user.role === "admin" ? "Administrateur" : "Client"}
                     </div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 mt-1">
                   {user.role === "admin" ? (
-                    <Link href="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                    <Link
+                      href="/admin/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full"
+                    >
                       <Button
                         variant="outline"
                         size="sm"
-                        className="w-full flex items-center justify-center gap-1.5 border-primary/30 text-primary"
+                        className="w-full flex items-center justify-center gap-1.5 border-primary/30 text-primary h-10"
                       >
                         <LayoutDashboard className="h-4 w-4" />
                         Dashboard
                       </Button>
                     </Link>
                   ) : (
-                    <Link href="/client/profile" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                    <Link
+                      href="/client/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full"
+                    >
                       <Button
                         variant="outline"
                         size="sm"
-                        className="w-full flex items-center justify-center gap-1.5"
+                        className="w-full flex items-center justify-center gap-1.5 h-10"
                       >
                         <User className="h-4 w-4" />
                         Mon Profil
@@ -262,7 +313,7 @@ export function Navbar() {
                       logout();
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full flex items-center justify-center gap-1.5 text-destructive hover:bg-destructive/10"
+                    className="w-full flex items-center justify-center gap-1.5 text-destructive hover:bg-destructive/10 h-10"
                   >
                     <LogOut className="h-4 w-4" />
                     Déconnexion
@@ -270,14 +321,25 @@ export function Navbar() {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-2">
-                <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="w-full">
-                  <Button variant="outline" className="w-full">
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full"
+                >
+                  <Button
+                    variant="outline"
+                    className="w-full h-10 font-medium hover:bg-muted"
+                  >
                     Connexion
                   </Button>
                 </Link>
-                <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="w-full">
-                  <Button className="w-full bg-gradient-to-r from-primary to-blue-600 text-white shadow-md">
+                <Link
+                  href="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full"
+                >
+                  <Button className="w-full h-10 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md shadow-blue-600/20">
                     S&apos;inscrire
                   </Button>
                 </Link>
