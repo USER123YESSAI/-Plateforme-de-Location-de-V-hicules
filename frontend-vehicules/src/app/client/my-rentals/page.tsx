@@ -132,9 +132,8 @@ export default function MyRentalsPage() {
           </p>
         </div>
         <Link href="/client/vehicles">
-          <Button className="flex items-center gap-2 rounded-xl shadow-xs">
-            <PlusCircle className="h-4 w-4" />
-            <span>Nouvelle Réservation</span>
+          <Button className="rounded-xl shadow-xs text-xs sm:text-sm">
+            Nouvelle Réservation
           </Button>
         </Link>
       </div>
@@ -282,11 +281,10 @@ export default function MyRentalsPage() {
                         {rental.status === 'pending' && (
                           <Button
                             size="sm"
-                            className="h-8 px-3 text-xs bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1.5"
+                            className="h-8 px-3 text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
                             onClick={() => setPayingRental(rental)}
                           >
-                            <CreditCard className="h-3.5 w-3.5" />
-                            <span>Payer</span>
+                            Payer
                           </Button>
                         )}
                         {['pending', 'confirmed'].includes(rental.status) && (
@@ -297,19 +295,18 @@ export default function MyRentalsPage() {
                             onClick={() => setCancellingRentalId(rental.id)}
                             title="Annuler la réservation"
                           >
-                            <Ban className="h-3.5 w-3.5" />
+                            Annuler
                           </Button>
                         )}
                         {['confirmed', 'active', 'completed'].includes(rental.status) && (
                           <Button
                             size="sm"
                             variant="outline"
-                            className="h-8 px-2.5 text-xs flex items-center gap-1.5"
+                            className="h-8 px-2.5 text-xs"
                             onClick={() => downloadInvoice(rental.id)}
                             title="Télécharger la facture PDF"
                           >
-                            <FileDown className="h-3.5 w-3.5" />
-                            <span className="hidden sm:inline">Facture</span>
+                            Facture
                           </Button>
                         )}
                       </div>

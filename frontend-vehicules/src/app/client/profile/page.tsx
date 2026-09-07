@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { toast } from "sonner";
-import { User, Mail, Phone, MapPin, CreditCard, ShieldCheck, Calendar, CheckCircle2 } from "lucide-react";
 import { BackButton } from "@/components/ui/back-button";
 
 export default function ProfilePage() {
@@ -76,8 +75,8 @@ export default function ProfilePage() {
               <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-card border-4 border-card text-primary font-black text-2xl shadow-md">
                 {user?.name ? user.name.charAt(0).toUpperCase() : "C"}
               </div>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
-                <CheckCircle2 className="h-3.5 w-3.5" /> Compte vérifié
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
+                Compte vérifié
               </span>
             </div>
 
@@ -86,22 +85,22 @@ export default function ProfilePage() {
               <p className="text-xs text-muted-foreground">{user?.email}</p>
             </div>
 
-            <div className="pt-2 border-t space-y-2.5 text-xs text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
-                <span>Rôle : <strong className="text-foreground capitalize">{user?.role || "client"}</strong></span>
+            <div className="pt-2 border-t text-xs text-muted-foreground divide-y divide-border/40">
+              <div className="flex justify-between py-1.5">
+                <span>Rôle</span>
+                <span className="font-semibold text-foreground capitalize">{user?.role || "client"}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-primary shrink-0" />
-                <span>{formData.phone || "Téléphone non renseigné"}</span>
+              <div className="flex justify-between py-1.5">
+                <span>Téléphone</span>
+                <span className="font-medium text-foreground">{formData.phone || "Non renseigné"}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-primary shrink-0" />
-                <span className="truncate">{formData.address || "Adresse non renseignée"}</span>
+              <div className="flex justify-between py-1.5">
+                <span>Adresse</span>
+                <span className="font-medium text-foreground truncate max-w-[150px]">{formData.address || "Non renseignée"}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CreditCard className="h-4 w-4 text-primary shrink-0" />
-                <span>Permis : <strong className="text-foreground">{formData.license_number || "Non renseigné"}</strong></span>
+              <div className="flex justify-between py-1.5">
+                <span>Permis</span>
+                <span className="font-medium text-foreground">{formData.license_number || "Non renseigné"}</span>
               </div>
             </div>
           </CardContent>

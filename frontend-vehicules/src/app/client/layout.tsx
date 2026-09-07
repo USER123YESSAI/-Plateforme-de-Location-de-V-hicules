@@ -10,12 +10,8 @@ import {
   CalendarCheck,
   User,
   LogOut,
-  Globe,
   Menu,
   X,
-  Compass,
-  ChevronRight,
-  ShieldCheck,
 } from "lucide-react";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
@@ -78,8 +74,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               <span className="text-base font-extrabold tracking-tight text-foreground block leading-tight">
                 Location Express
               </span>
-              <span className="text-[11px] text-primary font-semibold tracking-wide flex items-center gap-1">
-                <ShieldCheck className="h-3 w-3" /> Espace Client
+              <span className="text-[11px] text-primary font-semibold tracking-wide">
+                Espace Client
               </span>
             </div>
           </Link>
@@ -106,7 +102,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               <Link
                 key={item.href}
                 href={item.href}
-                className={`group flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                className={`group flex items-center px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                   active
                     ? "bg-primary text-primary-foreground shadow-xs font-semibold"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
@@ -123,7 +119,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                     </div>
                   </div>
                 </div>
-                {active && <ChevronRight className="h-4 w-4 text-primary-foreground" />}
               </Link>
             );
           })}
@@ -133,10 +128,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full flex items-center justify-center gap-2 border-primary/25 text-primary hover:bg-primary/10 rounded-xl"
+                className="w-full justify-center border-primary/25 text-primary hover:bg-primary/10 rounded-xl"
               >
-                <Compass className="h-4 w-4" />
-                <span>Trouver un véhicule</span>
+                Trouver un véhicule
               </Button>
             </Link>
           </div>
@@ -147,9 +141,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <div className="p-3.5 border-t space-y-2.5 bg-muted/20">
         <Link
           href="/"
-          className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-background/80 transition-colors"
+          className="flex items-center px-3 py-2 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-background/80 transition-colors"
         >
-          <Globe className="h-3.5 w-3.5" />
           <span>Voir le site public</span>
         </Link>
 
@@ -230,15 +223,13 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/" className="hidden sm:inline-flex">
               <Button variant="ghost" size="sm" className="text-xs text-muted-foreground hover:text-foreground">
-                <Globe className="h-3.5 w-3.5 mr-1.5" />
                 Site public
               </Button>
             </Link>
 
             <Link href="/client/vehicles">
-              <Button size="sm" className="text-xs flex items-center gap-1.5 shadow-xs">
-                <Car className="h-3.5 w-3.5" />
-                <span>Louer un véhicule</span>
+              <Button size="sm" className="text-xs shadow-xs">
+                Louer un véhicule
               </Button>
             </Link>
           </div>

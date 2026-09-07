@@ -63,28 +63,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Nos Agences */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground">Nos Agences</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                <span>Aéroport Blaise Diagne (DSS)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                <span>Dakar Plateau - Centre-ville</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                <span>Dakar Almadies</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                <span>Saly Portudal - Mbour</span>
-              </li>
-            </ul>
-          </div>
+         
 
           {/* Contact */}
           <div className="space-y-3">

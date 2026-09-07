@@ -152,9 +152,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="p-4 border-t space-y-3">
           <Link
             href="/"
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+            className="flex items-center px-3 py-2 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
           >
-            <Globe className="h-3.5 w-3.5" />
             <span>Voir le site public</span>
           </Link>
 

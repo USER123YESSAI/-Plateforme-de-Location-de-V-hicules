@@ -10,7 +10,7 @@ import { VehicleImage } from "@/components/ui/vehicle-image";
 import { SkeletonCard } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { formatPrice, getImageUrl } from "@/lib/utils";
-import { Search, Fuel, Users, Gauge, ArrowRight, RotateCcw, Car } from "lucide-react";
+import { Search, Fuel, Users, Gauge, Car } from "lucide-react";
 
 export default function ClientVehiclesPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -133,10 +133,9 @@ export default function ClientVehiclesPage() {
               setSearch("");
               setSelectedCategory("all");
             }}
-            className="gap-2 rounded-xl"
+            className="rounded-xl"
           >
-            <RotateCcw className="h-4 w-4" />
-            <span>Réinitialiser les filtres</span>
+            Réinitialiser les filtres
           </Button>
         </div>
       ) : (
@@ -207,9 +206,8 @@ export default function ClientVehiclesPage() {
               {/* Bouton de réservation */}
               <CardFooter className="p-4 pt-0">
                 <Link href={`/vehicles/${vehicle.id}`} className="w-full">
-                  <Button className="w-full rounded-xl flex items-center justify-center gap-2 group-hover:bg-primary/90 shadow-xs">
-                    <span>Réserver ce véhicule</span>
-                    <ArrowRight className="h-4 w-4" />
+                  <Button className="w-full rounded-xl justify-center group-hover:bg-primary/90 shadow-xs">
+                    Réserver ce véhicule
                   </Button>
                 </Link>
               </CardFooter>
