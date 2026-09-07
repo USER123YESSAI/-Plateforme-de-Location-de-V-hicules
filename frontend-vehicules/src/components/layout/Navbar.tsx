@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -69,8 +70,14 @@ export function Navbar() {
             className="group flex items-center gap-2.5 transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-xl"
             aria-label="Toumaï Drive - Retour à l'accueil"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary via-blue-600 to-indigo-600 text-white shadow-md shadow-primary/20 group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300">
-              <Car className="h-5 w-5" />
+            <div className="relative h-10 w-10 rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-border/50 bg-white group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300 shrink-0">
+              <Image
+                src="/toumai-drive-logo.jpg"
+                alt="Logo Toumaï Drive"
+                fill
+                className="object-contain p-0.5"
+                priority
+              />
             </div>
             <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent">
               Toumaï Drive

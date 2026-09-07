@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Car,
@@ -103,8 +104,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* En-tête Sidebar */}
           <div className="p-6 border-b flex items-center justify-between">
             <Link href="/admin/dashboard" className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-indigo-600 text-white shadow-md shadow-primary/20">
-                <Car className="h-5 w-5" />
+              <div className="relative h-9 w-9 rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-border/50 bg-white shrink-0">
+                <Image
+                  src="/toumai-drive-logo.jpg"
+                  alt="Logo Toumaï Drive"
+                  fill
+                  className="object-contain p-0.5"
+                  priority
+                />
               </div>
               <div>
                 <span className="text-lg font-extrabold tracking-tight text-foreground block leading-tight">

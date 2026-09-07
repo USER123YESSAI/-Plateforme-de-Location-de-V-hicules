@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Car, Mail, MapPin, Phone, ShieldCheck, Clock } from "lucide-react";
+import Image from "next/image";
+import { Mail, MapPin, Phone, ShieldCheck, Clock } from "lucide-react";
 
 export function Footer() {
   return (
@@ -8,9 +9,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Marque & Description */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary via-blue-600 to-indigo-600 text-white shadow-md shadow-primary/20">
-                <Car className="h-5 w-5" />
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative h-10 w-10 rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-border/50 bg-white group-hover:shadow-lg transition-all duration-300 shrink-0">
+                <Image
+                  src="/toumai-drive-logo.jpg"
+                  alt="Logo Toumaï Drive"
+                  fill
+                  className="object-contain p-0.5"
+                />
               </div>
               <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 Toumaï Drive
