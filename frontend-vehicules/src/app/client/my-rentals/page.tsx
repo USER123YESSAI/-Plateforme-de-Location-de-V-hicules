@@ -110,62 +110,111 @@ export default function MyRentalsPage() {
     }
   };
 
+  const stats = {
+    active: rentals.filter((r) => ["confirmed", "active"].includes(r.status)).length,
+    pending: rentals.filter((r) => r.status === "pending").length,
+    completed: rentals.filter((r) => r.status === "completed").length,
+    totalSpent: rentals
+      .filter((r) => r.status !== "cancelled")
+      .reduce((acc, r) => acc + (parseFloat(String(r.total_amount)) || 0), 0),
+  };
+
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">Mes Locations</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+            Mes Locations
+          </h1>
+          <p className="text-sm text-muted-foreground mt-0.5">
             Consultez vos réservations actives, effectuez vos paiements et téléchargez vos factures.
           </p>
         </div>
-        <Link href="/vehicles">
-          <Button className="flex items-center gap-2 shadow-xs">
+        <Link href="/client/vehicles">
+          <Button className="flex items-center gap-2 rounded-xl shadow-xs">
             <PlusCircle className="h-4 w-4" />
             <span>Nouvelle Réservation</span>
           </Button>
         </Link>
       </div>
-      
-      {/* Filtres */}
-      <div className="flex flex-wrap items-center gap-4 bg-card p-4 rounded-xl border shadow-xs">
-        <div className="flex items-center gap-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Statut :</label>
-          <select 
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-1.5 border rounded-lg text-sm bg-background font-medium focus:ring-2 focus:ring-primary focus:outline-hidden"
-          >
-            <option value="all">Tous les statuts</option>
-            <option value="pending">En attente (pending)</option>
-            <option value="confirmed">Confirmé (confirmed)</option>
-            <option value="active">En cours (active)</option>
-            <option value="completed">Terminé (completed)</option>
-            <option value="cancelled">Annulé (cancelled)</option>
-          </select>
+
+      {/* KPI Stats Cards - Élimine les espaces vides et donne de la valeur immédiate */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-card border rounded-xl p-4 shadow-2xs">
+          <p className="text-xs font-medium text-muted-foreground">Locations actives</p>
+          <p className="text-xl sm:text-2xl font-black text-primary mt-1">{stats.active}</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5">En cours ou confirmées</p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Année :</label>
-          <select 
-            value={yearFilter}
-            onChange={(e) => setYearFilter(e.target.value)}
-            className="px-3 py-1.5 border rounded-lg text-sm bg-background font-medium focus:ring-2 focus:ring-primary focus:outline-hidden"
-          >
-            <option value="all">Toutes les années</option>
-            <option value="2026">2026</option>
-            <option value="2025">2025</option>
-            <option value="2024">2024</option>
-          </select>
+        <div className="bg-card border rounded-xl p-4 shadow-2xs">
+          <p className="text-xs font-medium text-muted-foreground">En attente de paiement</p>
+          <p className="text-xl sm:text-2xl font-black text-amber-500 mt-1">{stats.pending}</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5">À régler pour valider</p>
+        </div>
+
+        <div className="bg-card border rounded-xl p-4 shadow-2xs">
+          <p className="text-xs font-medium text-muted-foreground">Terminées</p>
+          <p className="text-xl sm:text-2xl font-black text-foreground mt-1">{stats.completed}</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5">Historique archivé</p>
+        </div>
+
+        <div className="bg-card border rounded-xl p-4 shadow-2xs">
+          <p className="text-xs font-medium text-muted-foreground">Total engagé</p>
+          <p className="text-lg sm:text-xl font-black text-emerald-600 dark:text-emerald-400 mt-1 truncate">
+            {formatPrice(stats.totalSpent)}
+          </p>
+          <p className="text-[11px] text-muted-foreground mt-0.5">Sur toutes vos locations</p>
+        </div>
+      </div>
+
+      {/* Filtres */}
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-card p-3.5 sm:p-4 rounded-xl border shadow-2xs">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Statut :</label>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-3 py-1.5 border rounded-lg text-xs sm:text-sm bg-background font-medium focus:ring-2 focus:ring-primary focus:outline-hidden"
+              aria-label="Filtrer par statut"
+            >
+              <option value="all">Tous les statuts</option>
+              <option value="pending">En attente (pending)</option>
+              <option value="confirmed">Confirmé (confirmed)</option>
+              <option value="active">En cours (active)</option>
+              <option value="completed">Terminé (completed)</option>
+              <option value="cancelled">Annulé (cancelled)</option>
+            </select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Année :</label>
+            <select
+              value={yearFilter}
+              onChange={(e) => setYearFilter(e.target.value)}
+              className="px-3 py-1.5 border rounded-lg text-xs sm:text-sm bg-background font-medium focus:ring-2 focus:ring-primary focus:outline-hidden"
+              aria-label="Filtrer par année"
+            >
+              <option value="all">Toutes les années</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="text-xs text-muted-foreground font-medium">
+          {rentals.length} réservation{rentals.length > 1 ? "s" : ""} trouvée{rentals.length > 1 ? "s" : ""}
         </div>
       </div>
 
       {/* Tableau avec conteneur défilant */}
-      <div className="bg-card rounded-xl border shadow-xs overflow-hidden">
+      <div className="bg-card rounded-xl border shadow-2xs overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className="bg-muted/30">
                 <TableHead>Véhicule</TableHead>
                 <TableHead>Dates</TableHead>
                 <TableHead>Lieux</TableHead>
@@ -176,19 +225,17 @@ export default function MyRentalsPage() {
             </TableHeader>
             <TableBody>
               {loading ? (
-                <TableRow>
-                  <TableCell colSpan={6} className="p-0">
-                    <SkeletonTable rows={4} cols={6} />
-                  </TableCell>
-                </TableRow>
+                <SkeletonTable rows={4} cols={6} />
               ) : rentals.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
                     <div className="space-y-3">
                       <Calendar className="h-10 w-10 text-muted-foreground mx-auto opacity-30" />
                       <p className="font-medium">Vous n&apos;avez aucune réservation pour le moment.</p>
-                      <Link href="/vehicles" className="inline-block">
-                        <Button variant="outline" size="sm">Découvrir les véhicules</Button>
+                      <Link href="/client/vehicles" className="inline-block">
+                        <Button variant="outline" size="sm" className="rounded-xl">
+                          Découvrir les véhicules
+                        </Button>
                       </Link>
                     </div>
                   </TableCell>
