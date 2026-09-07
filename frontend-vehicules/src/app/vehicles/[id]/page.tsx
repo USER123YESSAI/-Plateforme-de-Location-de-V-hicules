@@ -271,7 +271,7 @@ export default function VehicleDetailPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-600 shrink-0" />
-                    <span>Assistance dépannage 24/7</span>
+                    <span>Assistance dépannage 7j/7</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-600 shrink-0" />

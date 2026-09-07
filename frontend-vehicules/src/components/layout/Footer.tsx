@@ -17,7 +17,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
-              Votre partenaire de mobilité premium au Tchad. Réservation en ligne instantanée, véhicules récents, tarifs transparents et assistance 24h/24 et 7j/7.
+              Votre partenaire de mobilité premium au Tchad. Réservation en ligne instantanée, véhicules récents, tarifs transparents et assistance 7j/7.
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2">
               <div className="flex items-center gap-1.5">

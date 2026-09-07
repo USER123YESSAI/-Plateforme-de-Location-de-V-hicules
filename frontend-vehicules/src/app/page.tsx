@@ -88,7 +88,7 @@ export default function Home() {
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-              Réservez en ligne en moins de 2 minutes. Flotte récente et révisée, assurance incluse, assistance 24/7 et annulation flexible.
+              Réservez en ligne en moins de 2 minutes. Flotte récente et révisée, assurance incluse, assistance 7j/7 et annulation flexible.
             </p>
 
             {/* Widget de Recherche Rapide */}
