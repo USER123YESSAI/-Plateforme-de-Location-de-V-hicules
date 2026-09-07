@@ -19,10 +19,14 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'terms_accepted' => 'required|accepted',
             'phone' => 'nullable|string|max:20',
             'license_number' => 'nullable|string|max:50',
             'license_expiry' => 'nullable|date',
             'address' => 'nullable|string',
+        ], [
+            'terms_accepted.required' => 'Vous devez accepter les Conditions d’utilisation et la Politique de confidentialité.',
+            'terms_accepted.accepted' => 'Vous devez accepter les Conditions d’utilisation et la Politique de confidentialité.',
         ]);
 
         if ($validator->fails()) {
@@ -38,6 +42,9 @@ class AuthController extends Controller
             'license_number' => $request->license_number,
             'license_expiry' => $request->license_expiry,
             'address' => $request->address,
+            'terms_accepted' => true,
+            'terms_accepted_at' => now(),
+            'terms_version' => (string) config('terms.version', '1.0'),
         ]);
 
         // Utilisation de la facade Tymon avec gestion d'erreur robuste
@@ -160,5 +167,42 @@ protected function respondWithToken($token)
     {
         auth('api')->logout();
         return response()->json(['message' => 'Déconnexion réussie']);
+    }
+
+    /**
+     * Accepter la dernière version des Conditions d’utilisation et Politique de confidentialité
+     */
+    public function acceptTerms(Request $request)
+    {
+        $user = auth('api')->user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Non authentifié'], 401);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'terms_accepted' => 'required|accepted',
+        ], [
+            'terms_accepted.required' => 'Vous devez accepter les Conditions d’utilisation et la Politique de confidentialité.',
+            'terms_accepted.accepted' => 'Vous devez accepter les Conditions d’utilisation et la Politique de confidentialité.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $currentVersion = (string) config('terms.version', '1.0');
+
+        $user->update([
+            'terms_accepted' => true,
+            'terms_accepted_at' => now(),
+            'terms_version' => $currentVersion,
+        ]);
+
+        return response()->json([
+            'message' => 'Conditions d’utilisation acceptées avec succès',
+            'user' => $user->fresh(),
+            'terms_version' => $currentVersion,
+        ]);
     }
 }

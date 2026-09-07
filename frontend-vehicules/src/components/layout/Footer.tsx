@@ -110,10 +110,14 @@ export function Footer() {
         {/* Ligne inférieure de Copyright */}
         <div className="mt-12 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} Location Express. Tous droits réservés.</p>
-          <div className="flex gap-6">
-            <span className="hover:text-foreground cursor-pointer transition-colors">Conditions Générales</span>
-            <span className="hover:text-foreground cursor-pointer transition-colors">Politique de Confidentialité</span>
-            <span className="hover:text-foreground cursor-pointer transition-colors">Mentions Légales</span>
+          <div className="flex flex-wrap gap-4 sm:gap-6">
+            <Link href="/conditions-utilisation" className="hover:text-primary transition-colors">
+              Conditions d’utilisation
+            </Link>
+            <Link href="/politique-confidentialite" className="hover:text-primary transition-colors">
+              Politique de Confidentialité
+            </Link>
+            <span className="text-muted-foreground/60">Mentions Légales</span>
           </div>
         </div>
       </div>

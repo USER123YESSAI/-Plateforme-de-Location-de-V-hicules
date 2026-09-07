@@ -51,6 +51,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('profile', [AuthController::class, 'profile']);
         Route::post('profile', [AuthController::class, 'updateProfile']);
         Route::put('profile', [AuthController::class, 'updateProfile']);
+        Route::post('accept-terms', [AuthController::class, 'acceptTerms']);
     });
 });
 

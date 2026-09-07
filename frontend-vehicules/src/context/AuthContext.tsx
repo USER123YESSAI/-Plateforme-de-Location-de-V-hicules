@@ -13,6 +13,10 @@ type User = {
   address?: string;
   license_number?: string;
   license_expiry?: string;
+  terms_accepted?: boolean;
+  terms_accepted_at?: string | null;
+  terms_version?: string | null;
+  terms_update_required?: boolean;
 };
 
 type AuthContextType = {
@@ -41,8 +45,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         try {
           setToken(storedToken);
           setUser(JSON.parse(storedUser));
-          // Verify with backend
-          await api.get('/auth/profile');
+          // Verify with backend and refresh user state
+          const profileRes = await api.get('/auth/profile');
+          if (profileRes.data) {
+            setUser(profileRes.data);
+            localStorage.setItem('user', JSON.stringify(profileRes.data));
+          }
         } catch (error) {
           console.warn("[Auth] Session validation failed, logging out:", error);
           localStorage.removeItem('token');

@@ -20,7 +20,10 @@ class User extends Authenticatable implements JWTSubject
         'license_number', 
         'license_expiry', 
         'role',
-        'address'
+        'address',
+        'terms_accepted',
+        'terms_accepted_at',
+        'terms_version',
     ];
 
     protected $hidden = [
@@ -32,7 +35,22 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'license_expiry' => 'date',
+        'terms_accepted' => 'boolean',
+        'terms_accepted_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'terms_update_required',
+    ];
+
+    /**
+     * Vérifie si l'utilisateur doit accepter une nouvelle version des conditions.
+     */
+    public function getTermsUpdateRequiredAttribute(): bool
+    {
+        $currentVersion = (string) config('terms.version', '1.0');
+        return !$this->terms_accepted || ((string) $this->terms_version !== $currentVersion);
+    }
 
     // --- MÉTHODES OBLIGATOIRES POUR JWT ---
 
