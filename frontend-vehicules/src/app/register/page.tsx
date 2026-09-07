@@ -76,16 +76,15 @@ export default function RegisterPage() {
         </div>
         <div className="bg-card rounded-2xl shadow-xl p-6 sm:p-8 space-y-6 border">
           <div className="text-center">
-            <div className="mx-auto relative h-16 w-16 rounded-2xl overflow-hidden shadow-lg shadow-blue-500/20 border border-border/50 bg-white mb-4">
+            <div className="mx-auto relative h-20 w-52 overflow-hidden mb-2">
               <Image
                 src="/toumai-drive-logo.jpg"
-                alt="Logo Toumaï Drive"
+                alt="Toumaï Drive"
                 fill
-                className="object-contain p-1"
+                className="object-contain scale-125"
                 priority
               />
             </div>
-            <h1 className="text-3xl font-extrabold text-blue-600 mb-1 tracking-tight">Toumaï Drive</h1>
             <p className="text-gray-600 text-sm">Votre plateforme de location de véhicules</p>
             <h2 className="text-2xl font-bold tracking-tight mt-6">Inscription</h2>
             <p className="text-gray-500 mt-2">Créez un nouveau compte client</p>

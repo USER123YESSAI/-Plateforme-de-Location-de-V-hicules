@@ -67,21 +67,18 @@ export function Navbar() {
         <div className="flex items-center shrink-0">
           <Link
             href="/"
-            className="group flex items-center gap-2.5 transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-xl"
+            className="group flex items-center transition-transform duration-200 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-xl"
             aria-label="Toumaï Drive - Retour à l'accueil"
           >
-            <div className="relative h-10 w-10 rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-border/50 bg-white group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300 shrink-0">
+            <div className="relative h-12 sm:h-14 w-32 sm:w-44 overflow-hidden flex items-center justify-center shrink-0">
               <Image
                 src="/toumai-drive-logo.jpg"
-                alt="Logo Toumaï Drive"
+                alt="Toumaï Drive"
                 fill
-                className="object-contain p-0.5"
+                className="object-contain scale-125 transition-transform duration-200 group-hover:scale-130"
                 priority
               />
             </div>
-            <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Toumaï Drive
-            </span>
           </Link>
         </div>
 

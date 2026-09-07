@@ -103,24 +103,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div>
           {/* En-tête Sidebar */}
           <div className="p-6 border-b flex items-center justify-between">
-            <Link href="/admin/dashboard" className="flex items-center gap-2.5">
-              <div className="relative h-9 w-9 rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-border/50 bg-white shrink-0">
+            <Link href="/admin/dashboard" className="flex items-center gap-2" aria-label="Toumaï Drive Administration">
+              <div className="relative h-12 w-36 overflow-hidden shrink-0">
                 <Image
                   src="/toumai-drive-logo.jpg"
-                  alt="Logo Toumaï Drive"
+                  alt="Toumaï Drive"
                   fill
-                  className="object-contain p-0.5"
+                  className="object-contain scale-125 origin-left"
                   priority
                 />
               </div>
-              <div>
-                <span className="text-lg font-extrabold tracking-tight text-foreground block leading-tight">
-                  Toumaï Drive
-                </span>
-                <span className="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
-                  Administration
-                </span>
-              </div>
+              <span className="text-[10px] bg-amber-500/15 text-amber-600 font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+                Admin
+              </span>
             </Link>
             <Button
               variant="ghost"

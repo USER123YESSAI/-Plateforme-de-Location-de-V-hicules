@@ -9,18 +9,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Marque & Description */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="relative h-10 w-10 rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-border/50 bg-white group-hover:shadow-lg transition-all duration-300 shrink-0">
+            <Link href="/" className="flex items-center group" aria-label="Toumaï Drive">
+              <div className="relative h-14 w-44 overflow-hidden flex items-center shrink-0">
                 <Image
                   src="/toumai-drive-logo.jpg"
-                  alt="Logo Toumaï Drive"
+                  alt="Toumaï Drive"
                   fill
-                  className="object-contain p-0.5"
+                  className="object-contain scale-125 origin-left"
                 />
               </div>
-              <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Toumaï Drive
-              </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
               Votre partenaire de mobilité premium au Tchad. Réservation en ligne instantanée, véhicules récents, tarifs transparents et assistance 7j/7.

@@ -67,24 +67,19 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <div className="flex flex-col">
         {/* En-tête Brand */}
         <div className="h-16 px-5 border-b flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="relative h-9 w-9 rounded-xl overflow-hidden shadow-md shadow-primary/20 border border-border/50 bg-white shrink-0">
+          <Link href="/" className="flex items-center gap-2" aria-label="Toumaï Drive">
+            <div className="relative h-11 w-36 overflow-hidden shrink-0">
               <Image
                 src="/toumai-drive-logo.jpg"
-                alt="Logo Toumaï Drive"
+                alt="Toumaï Drive"
                 fill
-                className="object-contain p-0.5"
+                className="object-contain scale-125 origin-left"
                 priority
               />
             </div>
-            <div>
-              <span className="text-base font-extrabold tracking-tight text-foreground block leading-tight">
-                Toumaï Drive
-              </span>
-              <span className="text-[11px] text-primary font-semibold tracking-wide">
-                Espace Client
-              </span>
-            </div>
+            <span className="text-[10px] bg-primary/10 text-primary font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+              Client
+            </span>
           </Link>
           <Button
             variant="ghost"
