@@ -108,7 +108,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </div>
               <div>
                 <span className="text-lg font-extrabold tracking-tight text-foreground block leading-tight">
-                  Location Express
+                  Toumaï Drive
                 </span>
                 <span className="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
                   Administration

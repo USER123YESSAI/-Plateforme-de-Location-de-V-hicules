@@ -5,8 +5,8 @@ import { Toaster } from "sonner";
 import { TermsUpdateModal } from "@/components/legal/TermsUpdateModal";
 
 export const metadata: Metadata = {
-  title: "Location Express - Plateforme de Location de Véhicules",
-  description: "Louez le véhicule parfait pour votre prochain voyage.",
+  title: "Toumaï Drive - Plateforme de Location de Véhicules",
+  description: "Louez le véhicule parfait pour votre prochain voyage avec Toumaï Drive au Tchad.",
 };
 
 export default function RootLayout({

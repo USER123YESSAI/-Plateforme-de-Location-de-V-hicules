@@ -19,8 +19,8 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Politique de confidentialité | Location Express",
-  description: "Découvrez comment Location Express protège, traite et respecte vos données personnelles et votre vie privée.",
+  title: "Politique de confidentialité | Toumaï Drive",
+  description: "Découvrez comment Toumaï Drive protège, traite et respecte vos données personnelles et votre vie privée.",
 };
 
 export default function PrivacyPage() {
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
               Politique de Confidentialité
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
-              La protection de votre vie privée et de vos données personnelles est au cœur de nos priorités chez Location Express.
+              La protection de votre vie privée et de vos données personnelles est au cœur de nos priorités chez Toumaï Drive.
             </p>
             <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground pt-2">
               <span className="flex items-center gap-1.5">
@@ -124,10 +124,10 @@ export default function PrivacyPage() {
                   <h2 className="text-xl font-bold text-foreground">1. Responsable du traitement</h2>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Le responsable du traitement des données à caractère personnel collectées via le site et les services de Location Express est la société Location Express S.A.R.L, ayant son siège à N&apos;Djamena, République du Tchad.
+                  Le responsable du traitement des données à caractère personnel collectées via le site et les services de Toumaï Drive est la société Toumaï Drive S.A.R.L, ayant son siège à N&apos;Djamena, République du Tchad.
                 </p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Pour toute question relative au traitement de vos informations personnelles, vous pouvez contacter notre référent protection des données par courrier électronique à l’adresse <span className="font-medium text-foreground">privacy@locationexpress.td</span>.
+                  Pour toute question relative au traitement de vos informations personnelles, vous pouvez contacter notre référent protection des données par courrier électronique à l’adresse <span className="font-medium text-foreground">privacy@toumaidrive.td</span>.
                 </p>
               </section>
 
@@ -253,12 +253,12 @@ export default function PrivacyPage() {
                   <h2 className="text-xl font-bold text-foreground">5. Partage & Destinataires des données</h2>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Location Express ne commercialise, ne loue ni ne vend vos données personnelles à des tiers. Les destinataires habilités sont uniquement :
+                  Toumaï Drive ne commercialise, ne loue ni ne vend vos données personnelles à des tiers. Les destinataires habilités sont uniquement :
                 </p>
                 <ul className="space-y-2 text-sm text-muted-foreground list-none pl-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                    <span>Le personnel habilité de Location Express (agents de comptoir, service client, gestionnaires de flotte).</span>
+                    <span>Le personnel habilité de Toumaï Drive (agents de comptoir, service client, gestionnaires de flotte).</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
@@ -307,7 +307,7 @@ export default function PrivacyPage() {
                   <h2 className="text-xl font-bold text-foreground">7. Sécurité des données</h2>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Location Express met en œuvre toutes les mesures techniques et organisationnelles appropriées pour garantir la sécurité et la confidentialité de vos données contre tout accès non autorisé, altération ou divulgation :
+                  Toumaï Drive met en œuvre toutes les mesures techniques et organisationnelles appropriées pour garantir la sécurité et la confidentialité de vos données contre tout accès non autorisé, altération ou divulgation :
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div className="p-3 rounded-lg bg-muted/40 border text-xs text-muted-foreground flex items-center gap-2">
@@ -362,7 +362,7 @@ export default function PrivacyPage() {
                 <div className="pt-3 border-t flex flex-col sm:flex-row gap-4 text-xs text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4 text-primary" />
-                    <span>privacy@locationexpress.td</span>
+                    <span>privacy@toumaidrive.td</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4 text-primary" />

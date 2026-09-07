@@ -72,7 +72,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             </div>
             <div>
               <span className="text-base font-extrabold tracking-tight text-foreground block leading-tight">
-                Location Express
+                Toumaï Drive
               </span>
               <span className="text-[11px] text-primary font-semibold tracking-wide">
                 Espace Client

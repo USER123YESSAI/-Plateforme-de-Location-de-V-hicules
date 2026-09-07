@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Conditions d’utilisation | Location Express",
-  description: "Consultez les conditions générales d’utilisation et de location de véhicules sur la plateforme Location Express.",
+  title: "Conditions d’utilisation | Toumaï Drive",
+  description: "Consultez les conditions générales d’utilisation et de location de véhicules sur la plateforme Toumaï Drive.",
 };
 
 export default function TermsPage() {
@@ -71,7 +71,7 @@ export default function TermsPage() {
               Conditions Générales d’Utilisation
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
-              Ces conditions régissent l’utilisation des services de réservation et de location de véhicules proposés par la plateforme Location Express.
+              Ces conditions régissent l’utilisation des services de réservation et de location de véhicules proposés par la plateforme Toumaï Drive.
             </p>
             <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground pt-2">
               <span className="flex items-center gap-1.5">
@@ -123,7 +123,7 @@ export default function TermsPage() {
                   <h2 className="text-xl font-bold text-foreground">1. Préambule & Objet</h2>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Les présentes Conditions Générales d’Utilisation (ci-après « CGU ») ont pour objet de définir les modalités et conditions dans lesquelles la société Location Express met à disposition de ses utilisateurs sa plateforme numérique de réservation et propose ses services de location de véhicules automobiles au Tchad.
+                  Les présentes Conditions Générales d’Utilisation (ci-après « CGU ») ont pour objet de définir les modalités et conditions dans lesquelles la société Toumaï Drive met à disposition de ses utilisateurs sa plateforme numérique de réservation et propose ses services de location de véhicules automobiles au Tchad.
                 </p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   Toute inscription sur la plateforme ou confirmation de réservation implique l’acceptation pleine, entière et sans réserve des présentes conditions par l’utilisateur.
@@ -170,10 +170,10 @@ export default function TermsPage() {
                   <h2 className="text-xl font-bold text-foreground">3. Réservation & Confirmation</h2>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  La réservation d’un véhicule s’effectue en ligne via la plateforme. Le contrat de location est réputé conclu dès validation de la réservation par Location Express et réception de l’e-mail de confirmation reprenant les dates, le tarif et les caractéristiques du véhicule loué.
+                  La réservation d’un véhicule s’effectue en ligne via la plateforme. Le contrat de location est réputé conclu dès validation de la réservation par Toumaï Drive et réception de l’e-mail de confirmation reprenant les dates, le tarif et les caractéristiques du véhicule loué.
                 </p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  En cas d’indisponibilité exceptionnelle du modèle choisi (panne imprévue, retard de restitution du locataire précédent), Location Express s’engage à fournir un véhicule de catégorie équivalente ou supérieure sans surcoût, ou à procéder au remboursement intégral des sommes versées.
+                  En cas d’indisponibilité exceptionnelle du modèle choisi (panne imprévue, retard de restitution du locataire précédent), Toumaï Drive s’engage à fournir un véhicule de catégorie équivalente ou supérieure sans surcoût, ou à procéder au remboursement intégral des sommes versées.
                 </p>
               </section>
 
@@ -229,7 +229,7 @@ export default function TermsPage() {
                   <h2 className="text-xl font-bold text-foreground">6. Assurance & Responsabilité</h2>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Tous les véhicules proposés par Location Express bénéficient d’une assurance responsabilité civile obligatoire ainsi que de garanties complémentaires (dommages collision, vol) selon la formule souscrite.
+                  Tous les véhicules proposés par Toumaï Drive bénéficient d’une assurance responsabilité civile obligatoire ainsi que de garanties complémentaires (dommages collision, vol) selon la formule souscrite.
                 </p>
                 <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 space-y-1">
                   <div className="flex items-center gap-2 font-semibold">
@@ -264,7 +264,7 @@ export default function TermsPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                    <span><strong>Moins de 24 heures ou non-présentation (« no-show ») :</strong> La totalité du montant de la première journée reste acquise à Location Express.</span>
+                    <span><strong>Moins de 24 heures ou non-présentation (« no-show ») :</strong> La totalité du montant de la première journée reste acquise à Toumaï Drive.</span>
                   </li>
                 </ul>
               </section>
@@ -278,7 +278,7 @@ export default function TermsPage() {
                   <h2 className="text-xl font-bold text-foreground">8. Mises à jour des conditions</h2>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Location Express se réserve le droit de modifier les présentes CGU à tout moment pour s’adapter aux évolutions légales, réglementaires ou fonctionnelles.
+                  Toumaï Drive se réserve le droit de modifier les présentes CGU à tout moment pour s’adapter aux évolutions légales, réglementaires ou fonctionnelles.
                 </p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   En cas de révision substantielle, les utilisateurs enregistrés seront informés via la plateforme et invités à accepter la nouvelle version lors de leur connexion suivante pour pouvoir continuer à utiliser le service de réservation.
@@ -299,7 +299,7 @@ export default function TermsPage() {
                 <div className="pt-3 border-t flex flex-col sm:flex-row gap-4 text-xs text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4 text-primary" />
-                    <span>contact@locationexpress.td</span>
+                    <span>contact@toumaidrive.td</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4 text-primary" />

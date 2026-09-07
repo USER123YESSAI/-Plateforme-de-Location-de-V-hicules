@@ -67,13 +67,13 @@ export function Navbar() {
           <Link
             href="/"
             className="group flex items-center gap-2.5 transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-xl"
-            aria-label="Location Express - Retour à l'accueil"
+            aria-label="Toumaï Drive - Retour à l'accueil"
           >
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary via-blue-600 to-indigo-600 text-white shadow-md shadow-primary/20 group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300">
               <Car className="h-5 w-5" />
             </div>
             <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Location Express
+              Toumaï Drive
             </span>
           </Link>
         </div>

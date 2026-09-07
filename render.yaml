@@ -9,7 +9,7 @@ services:
     region: frankfurt
     envVars:
       - key: APP_NAME
-        value: Location Express
+        value: Toumaï Drive
       - key: APP_ENV
         value: production
       - key: APP_DEBUG

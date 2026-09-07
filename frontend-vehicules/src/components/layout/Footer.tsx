@@ -13,7 +13,7 @@ export function Footer() {
                 <Car className="h-5 w-5" />
               </div>
               <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Location Express
+                Toumaï Drive
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
@@ -96,7 +96,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary shrink-0" />
-                <span>contact@locationexpress.td</span>
+                <span>contact@toumaidrive.td</span>
               </li>
               <li className="pt-2">
                 <span className="text-xs bg-muted/70 px-2.5 py-1 rounded-md text-foreground font-medium inline-block">
@@ -109,7 +109,7 @@ export function Footer() {
 
         {/* Ligne inférieure de Copyright */}
         <div className="mt-12 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Location Express. Tous droits réservés.</p>
+          <p>&copy; {new Date().getFullYear()} Toumaï Drive. Tous droits réservés.</p>
           <div className="flex flex-wrap gap-4 sm:gap-6">
             <Link href="/conditions-utilisation" className="hover:text-primary transition-colors">
               Conditions d’utilisation

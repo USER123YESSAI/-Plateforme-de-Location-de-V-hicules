@@ -40,7 +40,7 @@ export default function LoginPage() {
         </div>
         <div className="bg-card rounded-2xl shadow-xl p-6 sm:p-8 space-y-6 border">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-blue-600 mb-2">Location Express</h1>
+            <h1 className="text-4xl font-bold text-blue-600 mb-2">Toumaï Drive</h1>
             <p className="text-gray-600">Votre plateforme de location de véhicules</p>
             <h2 className="text-2xl font-bold tracking-tight mt-6">Connexion</h2>
             <p className="text-gray-500 mt-2">Connectez-vous à votre compte</p>
