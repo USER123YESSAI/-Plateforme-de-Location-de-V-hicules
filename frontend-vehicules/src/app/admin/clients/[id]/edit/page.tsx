@@ -5,6 +5,8 @@ import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter, useParams } from "next/navigation";
+import { toast } from "sonner";
+import { BackButton } from "@/components/ui/back-button";
 
 export default function EditClientPage() {
   const router = useRouter();
@@ -56,21 +58,27 @@ export default function EditClientPage() {
                          error.response?.data?.error || 
                          "Erreur lors de la modification du client";
       setError(errorMessage);
-      alert(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   if (fetchLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
+    return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Chargement...</div>;
   }
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight">Modifier le Client</h1>
+      <div className="space-y-2">
+        <BackButton href="/admin/clients" label="Retour aux clients" />
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Modifier le Client</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">Mettez à jour les informations et coordonnées de ce client.</p>
+        </div>
+      </div>
       {error && (
-        <div className="p-4 bg-destructive/10 text-destructive rounded-md">
+        <div className="p-4 bg-destructive/10 text-destructive rounded-md text-sm">
           {error}
         </div>
       )}

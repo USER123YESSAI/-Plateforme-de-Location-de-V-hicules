@@ -8,6 +8,7 @@ import { useRouter, useParams } from "next/navigation";
 import { getImageUrl } from "@/lib/utils";
 import { toast } from "sonner";
 import { VehicleImage } from "@/components/ui/vehicle-image";
+import { BackButton } from "@/components/ui/back-button";
 
 interface Category {
   id: number;
@@ -117,9 +118,12 @@ export default function EditVehiclePage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Modifier le Véhicule</h1>
-        <p className="text-sm text-muted-foreground">Mettez à jour les caractéristiques, tarifs et disponibilité de ce véhicule.</p>
+      <div className="space-y-2">
+        <BackButton href="/admin/vehicles" label="Retour aux véhicules" />
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Modifier le Véhicule</h1>
+          <p className="text-sm text-muted-foreground">Mettez à jour les caractéristiques, tarifs et disponibilité de ce véhicule.</p>
+        </div>
       </div>
 
       {error && (

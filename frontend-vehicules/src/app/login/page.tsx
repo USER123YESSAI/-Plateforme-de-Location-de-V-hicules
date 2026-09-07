@@ -6,6 +6,7 @@ import { api } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
+import { BackButton } from '@/components/ui/back-button';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -32,9 +33,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-8">
-      <div className="w-full max-w-md">
-        <div className="bg-card rounded-lg shadow-xl p-8 space-y-8 border">
+    <div className="min-h-screen bg-muted/20 flex items-center justify-center p-4 sm:p-8">
+      <div className="w-full max-w-md space-y-3">
+        <div>
+          <BackButton href="/" label="Retour à l'accueil" />
+        </div>
+        <div className="bg-card rounded-2xl shadow-xl p-6 sm:p-8 space-y-6 border">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-blue-600 mb-2">Location Express</h1>
             <p className="text-gray-600">Votre plateforme de location de véhicules</p>

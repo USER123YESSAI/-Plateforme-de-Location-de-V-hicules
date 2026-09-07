@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
+import { BackButton } from "@/components/ui/back-button";
 
 export default function VehicleRentalsHistoryPage() {
   const params = useParams<{ id: string }>();
@@ -35,14 +36,15 @@ export default function VehicleRentalsHistoryPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="space-y-2">
+        <BackButton href="/admin/vehicles" label="Retour aux véhicules" />
         <div>
-          <Link href="/admin/vehicles">
-            <Button variant="outline" size="sm" className="mb-2">&larr; Retour aux véhicules</Button>
-          </Link>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
             Historique des Locations {vehicle && `- ${vehicle.brand} ${vehicle.model} (${vehicle.license_plate})`}
           </h1>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            Consultez toutes les réservations passées et en cours pour ce véhicule.
+          </p>
         </div>
       </div>
 

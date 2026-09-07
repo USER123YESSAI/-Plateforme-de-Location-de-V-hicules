@@ -11,6 +11,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter, useParams } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
 import { toast } from "sonner";
+import { BackButton } from "@/components/ui/back-button";
 import {
   Calendar,
   MapPin,
@@ -198,7 +199,14 @@ export default function VehicleDetailPage() {
     <div className="min-h-screen bg-muted/20 flex flex-col justify-between">
       <Navbar />
 
-      <main className="container mx-auto px-4 py-8 sm:py-12 max-w-6xl">
+      <main className="container mx-auto px-4 py-6 sm:py-10 max-w-6xl space-y-4">
+        <div>
+          <BackButton
+            href={user?.role === "client" ? "/client/vehicles" : "/vehicles"}
+            label={user?.role === "client" ? "Retour à mon espace" : "Retour au catalogue"}
+          />
+        </div>
+
         <div className="bg-card rounded-2xl border shadow-lg overflow-hidden flex flex-col lg:flex-row">
           {/* Colonne gauche : Image, fiche technique et présentation */}
           <div className="lg:w-1/2 bg-muted/30 p-6 sm:p-8 border-b lg:border-b-0 lg:border-r flex flex-col justify-between">

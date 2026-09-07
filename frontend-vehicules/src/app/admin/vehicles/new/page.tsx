@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { BackButton } from "@/components/ui/back-button";
 
 interface Category {
   id: number;
@@ -82,9 +83,12 @@ export default function NewVehiclePage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Ajouter un Véhicule</h1>
-        <p className="text-sm text-muted-foreground">Remplissez les informations pour intégrer un nouveau véhicule à la flotte.</p>
+      <div className="space-y-2">
+        <BackButton href="/admin/vehicles" label="Retour aux véhicules" />
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Ajouter un Véhicule</h1>
+          <p className="text-sm text-muted-foreground">Remplissez les informations pour intégrer un nouveau véhicule à la flotte.</p>
+        </div>
       </div>
 
       {error && (

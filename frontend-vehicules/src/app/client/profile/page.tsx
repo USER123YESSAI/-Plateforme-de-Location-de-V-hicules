@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { toast } from "sonner";
 import { User, Mail, Phone, MapPin, CreditCard, ShieldCheck, Calendar, CheckCircle2 } from "lucide-react";
+import { BackButton } from "@/components/ui/back-button";
 
 export default function ProfilePage() {
   const { user, updateUser } = useAuth();
@@ -54,13 +55,16 @@ export default function ProfilePage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
-          Mon Profil
-        </h1>
-        <p className="text-sm text-muted-foreground mt-0.5">
-          Gérez vos coordonnées personnelles et les informations de votre permis de conduire.
-        </p>
+      <div className="space-y-2">
+        <BackButton href="/client/my-rentals" label="Retour à mes locations" />
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+            Mon Profil
+          </h1>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            Gérez vos coordonnées personnelles et les informations de votre permis de conduire.
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
