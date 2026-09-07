@@ -10,6 +10,7 @@ import { Rental, RentalStatus } from "@/types/rental";
 import { toast } from "sonner";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { SkeletonTable } from "@/components/ui/skeleton";
+import { XCircle, Trash2 } from "lucide-react";
 
 export default function AdminRentals() {
   const [rentals, setRentals] = useState<Rental[]>([]);
@@ -144,15 +145,19 @@ export default function AdminRentals() {
                         size="sm" 
                         onClick={() => setActionConfirm({ type: 'cancel', rentalId: r.id })} 
                         disabled={r.status === 'cancelled' || r.status === 'completed'}
+                        className="h-8 px-2.5 text-xs inline-flex items-center gap-1"
                       >
-                        Annuler
+                        <XCircle className="h-3.5 w-3.5 text-destructive" />
+                        <span>Annuler</span>
                       </Button>
                       <Button 
                         variant="destructive" 
                         size="sm" 
                         onClick={() => setActionConfirm({ type: 'delete', rentalId: r.id })}
+                        className="h-8 px-2.5 text-xs inline-flex items-center gap-1"
                       >
-                        Supprimer
+                        <Trash2 className="h-3.5 w-3.5" />
+                        <span>Supprimer</span>
                       </Button>
                     </div>
                   </TableCell>

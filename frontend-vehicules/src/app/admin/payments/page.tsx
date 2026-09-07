@@ -9,6 +9,7 @@ import { Payment } from "@/types/payment";
 import { toast } from "sonner";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { SkeletonTable } from "@/components/ui/skeleton";
+import { RotateCcw } from "lucide-react";
 
 export default function AdminPaymentsPage() {
   const [payments, setPayments] = useState<Payment[]>([]);
@@ -109,8 +110,9 @@ export default function AdminPaymentsPage() {
                   </TableCell>
                   <TableCell className="text-right">
                     {payment.status === 'completed' && (
-                      <Button size="sm" variant="destructive" onClick={() => setRefundingId(payment.id)}>
-                        Rembourser
+                      <Button size="sm" variant="destructive" onClick={() => setRefundingId(payment.id)} className="h-8 px-2.5 text-xs inline-flex items-center gap-1">
+                        <RotateCcw className="h-3.5 w-3.5" />
+                        <span>Rembourser</span>
                       </Button>
                     )}
                   </TableCell>

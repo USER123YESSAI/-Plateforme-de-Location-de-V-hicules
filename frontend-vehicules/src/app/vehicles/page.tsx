@@ -222,8 +222,8 @@ function VehiclesContent() {
         </div>
       ) : vehicles.length === 0 ? (
         <div className="bg-card rounded-2xl border p-12 text-center space-y-4 max-w-md mx-auto shadow-xs">
-          <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-3xl mx-auto">
-            🚗
+          <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
+            <Car className="h-8 w-8" />
           </div>
           <h3 className="text-xl font-bold">Aucun véhicule disponible</h3>
           <p className="text-sm text-muted-foreground leading-relaxed">

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function TestApi() {
   const [data, setData] = useState<any>(null);
@@ -48,7 +49,10 @@ export default function TestApi() {
 
         {data && (
           <div className="mt-4">
-            <h3 className="font-semibold text-green-600 mb-2">✅ Connexion réussie ! Données reçues :</h3>
+            <h3 className="font-semibold text-emerald-600 mb-2 flex items-center gap-1.5">
+              <CheckCircle2 className="h-4 w-4" />
+              <span>Connexion réussie ! Données reçues :</span>
+            </h3>
             <pre className="bg-muted p-4 rounded-md overflow-auto max-h-96 text-sm">
               {JSON.stringify(data, null, 2)}
             </pre>

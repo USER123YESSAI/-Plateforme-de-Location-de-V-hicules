@@ -20,6 +20,7 @@ import {
   ArrowRight,
   CheckCircle2,
   Sparkles,
+  BadgePercent,
 } from "lucide-react";
 
 export default function Home() {
@@ -262,8 +263,8 @@ export default function Home() {
 
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-card p-6 rounded-2xl border shadow-xs text-center space-y-3 hover:border-primary/40 transition-colors">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
-                  🚗
+                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto">
+                  <Car className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-bold">Flotte Récente & Contrôlée</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -272,8 +273,8 @@ export default function Home() {
               </div>
 
               <div className="bg-card p-6 rounded-2xl border shadow-xs text-center space-y-3 hover:border-primary/40 transition-colors">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
-                  💰
+                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto">
+                  <BadgePercent className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-bold">Tarifs 100% Transparents</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -282,8 +283,8 @@ export default function Home() {
               </div>
 
               <div className="bg-card p-6 rounded-2xl border shadow-xs text-center space-y-3 hover:border-primary/40 transition-colors">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
-                  🛡️
+                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto">
+                  <ShieldCheck className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-bold">Assistance & Support 7j/7</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">

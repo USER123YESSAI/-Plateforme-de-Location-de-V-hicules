@@ -9,6 +9,7 @@ import { formatPrice } from "@/lib/utils";
 import { toast } from "sonner";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { SkeletonTable } from "@/components/ui/skeleton";
+import { Pencil, FileText, Trash2 } from "lucide-react";
 
 export default function AdminClients() {
   const [clients, setClients] = useState<any[]>([]);
@@ -157,20 +158,26 @@ export default function AdminClients() {
                     {new Date(c.created_at).toLocaleDateString('fr-FR')}
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-2">
+                    <div className="flex items-center justify-end gap-1.5">
                       <Link href={`/admin/clients/${c.id}/edit`}>
-                        <Button variant="outline" size="sm">Modifier</Button>
+                        <Button variant="outline" size="sm" className="h-8 px-2.5 text-xs inline-flex items-center gap-1">
+                          <Pencil className="h-3.5 w-3.5" />
+                          <span>Modifier</span>
+                        </Button>
                       </Link>
-                      <Button variant="outline" size="sm" onClick={() => viewClientRentals(c.id)}>
-                        Locations
+                      <Button variant="outline" size="sm" onClick={() => viewClientRentals(c.id)} className="h-8 px-2.5 text-xs inline-flex items-center gap-1">
+                        <FileText className="h-3.5 w-3.5" />
+                        <span>Locations</span>
                       </Button>
                       <Button 
                         variant="destructive" 
                         size="sm" 
                         onClick={() => setClientToDelete(c.id)} 
                         disabled={c.role === 'admin'}
+                        className="h-8 px-2.5 text-xs inline-flex items-center gap-1"
                       >
-                        Supprimer
+                        <Trash2 className="h-3.5 w-3.5" />
+                        <span>Supprimer</span>
                       </Button>
                     </div>
                   </TableCell>

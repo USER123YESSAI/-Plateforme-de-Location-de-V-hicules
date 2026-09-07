@@ -12,7 +12,7 @@ import { formatPrice } from "@/lib/utils";
 import { Rental } from "@/types/rental";
 import { PaymentMethod } from "@/types/payment";
 import { toast } from "sonner";
-import { CreditCard, FileDown, Ban, Calendar, PlusCircle } from "lucide-react";
+import { CreditCard, FileText, XCircle, Calendar, Smartphone, Building2, Banknote, Check } from "lucide-react";
 import Link from "next/link";
 
 export default function MyRentalsPage() {
@@ -281,32 +281,35 @@ export default function MyRentalsPage() {
                         {rental.status === 'pending' && (
                           <Button
                             size="sm"
-                            className="h-8 px-3 text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
+                            className="h-8 px-2.5 text-xs bg-emerald-600 hover:bg-emerald-700 text-white inline-flex items-center gap-1.5"
                             onClick={() => setPayingRental(rental)}
                           >
-                            Payer
+                            <CreditCard className="h-3.5 w-3.5" />
+                            <span>Payer</span>
                           </Button>
                         )}
                         {['pending', 'confirmed'].includes(rental.status) && (
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="h-8 px-2.5 text-xs text-destructive hover:bg-destructive/10"
+                            className="h-8 px-2.5 text-xs text-destructive hover:bg-destructive/10 inline-flex items-center gap-1.5"
                             onClick={() => setCancellingRentalId(rental.id)}
                             title="Annuler la réservation"
                           >
-                            Annuler
+                            <XCircle className="h-3.5 w-3.5" />
+                            <span>Annuler</span>
                           </Button>
                         )}
                         {['confirmed', 'active', 'completed'].includes(rental.status) && (
                           <Button
                             size="sm"
                             variant="outline"
-                            className="h-8 px-2.5 text-xs"
+                            className="h-8 px-2.5 text-xs inline-flex items-center gap-1.5"
                             onClick={() => downloadInvoice(rental.id)}
                             title="Télécharger la facture PDF"
                           >
-                            Facture
+                            <FileText className="h-3.5 w-3.5" />
+                            <span className="hidden sm:inline">Facture</span>
                           </Button>
                         )}
                       </div>
@@ -359,27 +362,68 @@ export default function MyRentalsPage() {
 
             <form onSubmit={handlePay} className="space-y-4">
               <div>
-                <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-2">
                   Moyen de paiement
                 </label>
-                <select 
-                  value={paymentMethod}
-                  onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
-                  className="w-full h-11 px-3 border rounded-xl bg-background text-sm font-medium focus:ring-2 focus:ring-primary focus:outline-hidden"
-                >
-                  <option value="card">💳 Carte bancaire (Visa / Mastercard)</option>
-                  <option value="mobile_money">📱 Mobile Money (Wave / Orange Money)</option>
-                  <option value="bank_transfer">🏦 Virement bancaire</option>
-                  <option value="cash">💵 Espèces en agence</option>
-                </select>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("card")}
+                    className={`flex items-center gap-2.5 p-3 rounded-xl border text-left text-xs font-semibold transition-all ${
+                      paymentMethod === "card"
+                        ? "border-primary bg-primary/10 text-primary ring-1 ring-primary"
+                        : "border-border/60 hover:border-primary/40 bg-background text-foreground"
+                    }`}
+                  >
+                    <CreditCard className="h-4 w-4 shrink-0" />
+                    <span>Carte bancaire</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("mobile_money")}
+                    className={`flex items-center gap-2.5 p-3 rounded-xl border text-left text-xs font-semibold transition-all ${
+                      paymentMethod === "mobile_money"
+                        ? "border-primary bg-primary/10 text-primary ring-1 ring-primary"
+                        : "border-border/60 hover:border-primary/40 bg-background text-foreground"
+                    }`}
+                  >
+                    <Smartphone className="h-4 w-4 shrink-0" />
+                    <span>Mobile Money</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("bank_transfer")}
+                    className={`flex items-center gap-2.5 p-3 rounded-xl border text-left text-xs font-semibold transition-all ${
+                      paymentMethod === "bank_transfer"
+                        ? "border-primary bg-primary/10 text-primary ring-1 ring-primary"
+                        : "border-border/60 hover:border-primary/40 bg-background text-foreground"
+                    }`}
+                  >
+                    <Building2 className="h-4 w-4 shrink-0" />
+                    <span>Virement</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("cash")}
+                    className={`flex items-center gap-2.5 p-3 rounded-xl border text-left text-xs font-semibold transition-all ${
+                      paymentMethod === "cash"
+                        ? "border-primary bg-primary/10 text-primary ring-1 ring-primary"
+                        : "border-border/60 hover:border-primary/40 bg-background text-foreground"
+                    }`}
+                  >
+                    <Banknote className="h-4 w-4 shrink-0" />
+                    <span>Espèces</span>
+                  </button>
+                </div>
               </div>
 
               <div className="flex justify-end gap-2.5 pt-2">
                 <Button type="button" variant="outline" onClick={() => setPayingRental(null)} disabled={submittingPayment}>
                   Fermer
                 </Button>
-                <Button type="submit" disabled={submittingPayment} className="bg-gradient-to-r from-primary to-blue-600 text-white">
-                  {submittingPayment ? "Paiement en cours..." : "Confirmer le paiement"}
+                <Button type="submit" disabled={submittingPayment} className="bg-gradient-to-r from-primary to-blue-600 text-white inline-flex items-center gap-1.5">
+                  <Check className="h-4 w-4" />
+                  <span>{submittingPayment ? "Paiement en cours..." : "Confirmer le paiement"}</span>
                 </Button>
               </div>
             </form>
