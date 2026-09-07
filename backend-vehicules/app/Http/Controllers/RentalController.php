@@ -299,14 +299,18 @@ class RentalController extends Controller
      */
     public function generateInvoice(Request $request, $id)
     {
-        $rental = Rental::with(['vehicle', 'user', 'insurance'])->findOrFail($id);
+        $rental = Rental::with(['vehicle.category', 'user', 'insurance', 'payment'])->findOrFail($id);
         if ($request->user()->role !== 'admin' && $rental->user_id !== $request->user()->id) {
             return response()->json(['message' => 'Accès interdit'], 403);
         }
 
+        $logoPath = public_path('toumai-drive-logo.jpg');
+        $logoBase64 = file_exists($logoPath) ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($logoPath)) : null;
+
         $pdf = Pdf::loadView('invoices.rental', [
             'rental' => $rental, 
-            'date' => now()->format('d/m/Y')
+            'date'   => now()->format('d/m/Y'),
+            'logo'   => $logoBase64,
         ]);
         return $pdf->download("facture-{$rental->id}.pdf");
     }
