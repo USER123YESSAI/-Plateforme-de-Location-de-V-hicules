@@ -52,11 +52,10 @@
 
 ## 🛠 Architecture & Stack Technique
 
-| Composant | Technologie | Description |
-| :--- | :--- | :--- |
-| **Frontend** | **Next.js 15** (App Router) | Framework React moderne avec rendu hybride (SSR / Client) |
+| **Frontend Web** | **Next.js 15** (App Router) | Framework React moderne avec rendu hybride (SSR / Client) |
+| **Application Mobile** | **React Native (Expo SDK 51)** | Application iOS & Android avec Expo Router & TypeScript |
 | **UI & Styling** | **Tailwind CSS + Lucide Icons** | Design système réactif, moderne et accessible |
-| **Langage Frontend** | **TypeScript** | Typage statique robuste et intégration API sécurisée |
+| **Langages** | **TypeScript & PHP** | Typage statique robuste et intégration API sécurisée |
 | **Backend API** | **Laravel 12** | API RESTful élégante, performante et modulaire |
 | **Authentification** | **JWT (JSON Web Tokens)** | Sessions stateless sécurisées par Bearer Tokens |
 | **Base de Données** | **SQLite** (dév) / **MySQL 8** (prod) | Persistance relationnelle avec migrations et seeders Eloquent |
@@ -86,6 +85,16 @@ Plateforme de Location de Véhicules/
 │   │   ├── lib/                 # Utilitaires et client API Axios
 │   │   └── types/               # Déclarations TypeScript
 │   ├── public/                  # Assets statiques (logos Toumaï Drive, favicons)
+│   └── package.json
+│
+├── mobile-vehicules/            # Application Mobile React Native (Expo)
+│   ├── app/                     # Navigation Expo Router ((tabs), vehicle, booking, rental)
+│   ├── src/
+│   │   ├── components/          # Composants natifs (VehicleCard, RentalCard, Badge...)
+│   │   ├── context/             # AuthContext (session JWT)
+│   │   ├── services/            # Client API Axios & Expo SecureStore
+│   │   └── constants/           # Thème et couleurs Toumaï Drive
+│   ├── assets/                  # Logos et icônes
 │   └── package.json
 │
 └── backend-vehicules/           # API RESTful Laravel 12
