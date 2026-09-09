@@ -4,6 +4,7 @@
 **/.next/
 **/out/
 **/build/
+**/.expo/
 **/.env
 **/.env.local
 **/.env.*.local
